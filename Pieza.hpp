@@ -6,7 +6,7 @@ class Pieza {
     int posicion_y;
     public:
         Pieza(){}//Constructor
-        char getCaracter(){return caracter_pieza;}
+        virtual char getCaracter(){return caracter_pieza;}
         virtual bool validar_movimiento(int, int) {
             return true;
         }
