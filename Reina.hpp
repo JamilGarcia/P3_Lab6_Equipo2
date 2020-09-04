@@ -3,8 +3,8 @@
 #define REINA_H
 class Reina : public Pieza{
     public: 
-    Reina();
-    bool Validar_Movimiento(int x, int y); //Polimorfismo
+    Reina(){}
+    bool Validar_Movimiento(int x, int y){return true;} //Polimorfismo
     ~Reina();
 };
 

@@ -1,6 +1,5 @@
 #pragma once
 class Pieza {
-
     protected:
     char caracter_pieza;
     int posicion_x;

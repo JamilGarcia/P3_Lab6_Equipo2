@@ -1,15 +1,17 @@
 #include <iostream>
 #include <string>
 #include "Pieza.hpp"
-#include "Alfil.hpp"
 #include "Caballo.hpp"
+#include "Torre.hpp"
+/*#include "Alfil.hpp"
+
 #include "Peon.hpp"
 #include "Reina.hpp"
-#include "Rey.hpp"
-#include "Torre.hpp"
+#include "Rey.hpp"*/
+
 using namespace std;
 
-Pieza** inicializar_Piezas(Pieza**);
+Pieza*** inicializar_Piezas(Pieza***);
 int main() {
 
     string nombre_jugador1;
@@ -35,10 +37,21 @@ int main() {
                 cin >> nombre_jugador2;
                 cout << endl;
 
-                Pieza**  tablero = new Pieza*[8];
+                Pieza***  tablero;
+                tablero = new Pieza**[8];
+	            for(int i=0; i<8;i++){
+		            tablero[i]=new Pieza* [8];
+		            for(int j=0; j<8;j++){
+			            tablero[i][j]= NULL;
+		            }
+	            }	
+                tablero = inicializar_Piezas(tablero);
+                // Libera la matriz
                 for (int i = 0; i < 8; i++){
-                    tablero[i] = new Pieza[8];
+                    delete[] tablero[i];
+                    tablero[i] = NULL;
                 }
+                    delete[] tablero;
                 break;
             }
             case 2: {
@@ -54,6 +67,7 @@ int main() {
     return 0;
 }
 
+<<<<<<< HEAD
 void  CrearTablero()
 {
     //Creacion De Blancas
@@ -75,13 +89,19 @@ int main()
 }
 
 Pieza** inicializar_Piezas(Pieza** tablero){
+=======
+Pieza*** inicializar_Piezas(Pieza*** tablero){
+>>>>>>> abcf9ec33052ca6059e3e6a5a01475f52cabcc7d
     //Inicializar Piezas negras
-    //tablero[0][0] =  new Torre();//Torres
-    //tablero[0][7] = new Torre();
-
+    tablero[0][0] =  new Torre(0,0,'r');
+    cout << "puso Torre1" << endl;
+    tablero[0][7] =  new Torre(0,7,'r');
+    cout << "puso Torre2" << endl;
     //Inicializar Caballos Negros
-    //tablero[0][1] = new Caballo();
-    //tablero[0][6] = new Caballo();
+    tablero[0][1] = new Caballo(0,1,'n');
+    cout << "puso Caballo1" << endl;
+    tablero[0][6] = new Caballo(0,6,'n');
+    cout << "puso Caballo2" << endl;
     //Inicializar Alfin Negro
     //tablero[0][2] = new Alfin();
     //tablero[0][5] = new Alfin();
