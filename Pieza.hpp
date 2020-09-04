@@ -6,8 +6,10 @@ class Pieza {
     int posicion_x;
     int posicion_y;
     public:
-        Pieza();//Constructor
-        char getCaracter();
-        virtual bool validar_movimiento(int x, int y);
-        ~Pieza();
+        Pieza(){}//Constructor
+        char getCaracter(){return caracter_pieza;}
+        virtual bool validar_movimiento(int, int) {
+            return true;
+        }
+        ~Pieza(){}
 };
