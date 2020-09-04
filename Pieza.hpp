@@ -1,11 +1,12 @@
 #pragma once
 class Pieza {
-    private:
-    char caracter_pieza = ' ';
-    int fila;
-    int columna;
+
+    protected:
+    char caracter_pieza;
+    int posicion_x;
+    int posicion_y;
     public:
-        Pieza(int, int);//Constructor
+        Pieza();//Constructor
         char getCaracter();
         virtual bool validar_movimiento(int x, int y);
         ~Pieza();

@@ -1,11 +1,11 @@
 #include "Pieza.hpp"
 #ifndef REY_H
 #define REY_H
-class Alfil : public Pieza{
+class Rey : public Pieza{
     public: 
-    REY(Pieza::int,int);
+    Rey();
     bool Validar_Movimiento(int x, int y); //Polimorfismo
-    ~REY();
+    ~Rey();
 };
 #endif
 

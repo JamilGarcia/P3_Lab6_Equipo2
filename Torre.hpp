@@ -3,7 +3,7 @@
 #define TORRE_H
 class Torre : public Pieza{
     public: 
-    Torre(Pieza::int,int);
+    Torre();
     bool Validar_Movimiento(int x, int y); //Polimorfismo
     ~Torre();
 };
