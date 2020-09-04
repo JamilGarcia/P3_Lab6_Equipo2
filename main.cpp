@@ -3,15 +3,16 @@
 #include "Pieza.hpp"
 #include "Caballo.hpp"
 #include "Torre.hpp"
-/*#include "Alfil.hpp"
-
+#include "Alfil.hpp"
 #include "Peon.hpp"
 #include "Reina.hpp"
-#include "Rey.hpp"*/
+#include "Rey.hpp"
 
 using namespace std;
 
 Pieza*** inicializar_Piezas(Pieza***);
+void imprimir_Tablero_Jugador1(Pieza***);
+void imprimir_Tablero_Jugador2(Pieza***);
 int main() {
 
     string nombre_jugador1;
@@ -46,6 +47,7 @@ int main() {
 		            }
 	            }	
                 tablero = inicializar_Piezas(tablero);
+
                 // Libera la matriz
                 for (int i = 0; i < 8; i++){
                     delete[] tablero[i];
@@ -67,41 +69,48 @@ int main() {
     return 0;
 }
 
+void imprimir_Tablero_Jugador1(Pieza*** tablero){
+
+}
 Pieza*** inicializar_Piezas(Pieza*** tablero){
     //Inicializar Piezas negras
     tablero[0][0] =  new Torre(0,0,'r');
-    cout << "puso Torre1" << endl;
     tablero[0][7] =  new Torre(0,7,'r');
-    cout << "puso Torre2" << endl;
     //Inicializar Caballos Negros
     tablero[0][1] = new Caballo(0,1,'n');
-    cout << "puso Caballo1" << endl;
     tablero[0][6] = new Caballo(0,6,'n');
-    cout << "puso Caballo2" << endl;
     //Inicializar Alfin Negro
-    //tablero[0][2] = new Alfin();
-    //tablero[0][5] = new Alfin();
-
+    tablero[0][2] = new Alfil(0,2,'b');
+    tablero[0][5] = new Alfil(0,5,'b');
     //Inicializar Rey Negro
-    //tablero[0][4] = new Rey();
-    //Inicializar Reina
-    //tablero[0][3] = new Reina();
+    tablero[0][4] = new Rey(0,4,'k');
+    //Inicializar Reina Negro
+    tablero[0][3] = new Reina(0,3,'q');
 
-    //Inicializar Blancas
+    //Peones Negros
+    for (int i = 0; i < 8; i++){
+        tablero[1][i] = new Peon(1,i,'p');
+    }
+    
     //Inicializar Piezas Blancas
-    //tablero[7][0] =  new Torre();//Torres
-    //tablero[7][7] = new Torre();
-
+    //Torres Blancas
+    tablero[7][0] =  new Torre(7,0,'r');
+    tablero[7][7] =  new Torre(7,7,'r');
     //Inicializar Caballos Blancas
-    //tablero[7][1] = new Caballo();
-    //tablero[7][6] = new Caballo();
-    //Inicializar Alfin Negro
-    //tablero[7][2] = new Alfin();
-    //tablero[7][5] = new Alfin();
+    tablero[7][1] = new Caballo(7,1,'n');
+    tablero[7][6] = new Caballo(7,6,'n');
+    //Inicializar Alfin Blancas
+    tablero[7][2] = new Alfil(7,2,'b');
+    tablero[7][5] = new Alfil(7,5,'b');
 
-    //Inicializar Rey Negro
-    //tablero[7][4] = new Rey();
-    //Inicializar Reina
-    //tablero[7][3] = new Reina();
+    //Inicializar Rey Blancas
+    tablero[0][4] = new Rey(7,4,'k');
+    //Inicializar Reina Blanca
+    tablero[0][3] = new Reina(7,3,'q');
+
+    //Peones Blancas
+    for (int i = 0; i < 8; i++){
+        tablero[6][i] = new Peon(6,i,'p');
+    }
     return tablero;
 }
