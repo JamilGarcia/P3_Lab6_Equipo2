@@ -4,9 +4,9 @@
 
 class Peon : public Pieza {
     public:
-    Peon();
-    virtual bool validar_movimiento(int x, int y);
-    ~Peon();
+    Peon(){}
+    virtual bool validar_movimiento(int x, int y){return true;}
+    ~Peon(){}
 };
  
 #endif
