@@ -3,7 +3,7 @@
 #define REINA_H
 class Reina : public Pieza{
     public: 
-    Reina(Pieza::int,int);
+    Reina();
     bool Validar_Movimiento(int x, int y); //Polimorfismo
     ~Reina();
 };

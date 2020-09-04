@@ -3,7 +3,7 @@
 #define ALFIL_H
 class Alfil : public Pieza{
     public: 
-    Alfil(Pieza::int,int);
+    Alfil();
     bool Validar_Movimiento(int x, int y); //Polimorfismo
     ~Alfil();
 };

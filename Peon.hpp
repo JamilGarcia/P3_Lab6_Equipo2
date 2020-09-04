@@ -4,7 +4,7 @@
 
 class Peon : public Pieza {
     public:
-    Peon(Pieza::int,int);
+    Peon();
     virtual bool validar_movimiento(int x, int y);
     ~Peon();
 };

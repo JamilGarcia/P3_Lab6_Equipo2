@@ -3,7 +3,7 @@
 #define CABALLO_H
 class Caballo : public Pieza{
     public: 
-    Caballo(Pieza::int,int);
+    Caballo();
     bool Validar_Movimiento(int x, int y);
     ~Caballo();
 };
