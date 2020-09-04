@@ -1,38 +1,25 @@
-#include <iostream>
-#include <string>
-using namespace std;
+#pragma once
+class Pieza {
+    private:
+    char caracter_pieza = ' ';
+    int fila;
+    int columna;
+    public:
+        Pieza(int, int);//Constructor
+        char getCaracter();
+        virtual bool validar_movimiento(int x, int y);
+        ~Pieza();
+};
 
-class Pieza
-{
-private:
-    //Ingresar variables privadas
-    char simboloP; 
-    int PosX, PosY;
-public:
-    //Ingresar Variables publicas
-    Pieza();
-    Pieza(int posX, int posY, char Simb) //Constructor
-    {
-        PosX = posX; 
-        PosY = posY; 
-        simboloP = Simb; 
-    }
+    //} //Polimorfismo Obligado
 
-    ~Pieza() //Destructor
-    {
-    }
-    virtual bool Validar_Movimiento()
-    {
-
-    } //Polimorfismo Obligado
-
-    virtual string Mandar_Posicion()
+    /*virtual string Mandar_Posicion()
     {
         string pos;
         return pos;
-    } //Polimorfismo Pensado Para Imprimir mas adelante
+    } //Polimorfismo Pensado Para Imprimir mas adelante*/
 
-    virtual int Mandar_X(char pos)
+    /*virtual int Mandar_X(char pos)
     {
         if (pos == 'a')
         {
@@ -85,5 +72,4 @@ public:
     virtual char SimboloPieza()
     {
         return simboloP;
-    } //Polimorfismo De Nota2
-};
+    } //Polimorfismo De Nota2*/

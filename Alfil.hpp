@@ -1,21 +1,10 @@
-#include <iostream>
-#include <string>
 #include "Pieza.hpp"
-using namespace std;
-
+#ifndef ALFIL_H
+#define ALFIL_H
 class Alfil : public Pieza{
-    private: 
-    //Ingresar Variables Privadas
     public: 
-    //Ingresar Variables Publicas
-    Alfil(int posX, int posY, char Simb)
-    {
-    }
-
-    ~Alfil(){
-        //Destructor
-    }
-
-    bool Validar_Movimiento(); //Polimorfismo
-    string Mandar_Posicion();
+    Alfil(Pieza::int,int);
+    bool Validar_Movimiento(int x, int y); //Polimorfismo
+    ~Alfil();
 };
+#endif

@@ -1,20 +1,12 @@
-#include <iostream>
-#include <string>
 #include "Pieza.hpp"
-using namespace std;
+#ifndef PEON_H
+#define PEON_H
 
-class Peon : public Pieza{
-    private: 
-    //Ingresar Variables Privadas
-    public: 
-    //Ingresar Variables Publicas
-    Peon(int posX, int posY, char Simb)
-    {
-    }
-    ~Peon(){
-        //Destructor
-    }
-
-    bool Validar_Movimiento(); //Polimorfismo
-    string Mandar_Posicion();
+class Peon : public Pieza {
+    public:
+    Peon(Pieza::int,int);
+    virtual bool validar_movimiento(int x, int y);
+    ~Peon();
 };
+ 
+#endif

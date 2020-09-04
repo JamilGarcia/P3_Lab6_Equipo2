@@ -1,22 +1,10 @@
-#include <iostream>
-#include <string>
 #include "Pieza.hpp"
-using namespace std;
-
-class Torre : public Pieza
-{
-private:
-    //Ingresar Variables Privadas
-public:
-    //Ingresar Variables Publicas
-    Torre(int posX, int posY, char Simb)
-    {
-    }
-    ~Torre()
-    {
-        //Destructor
-    }
-
-    bool Validar_Movimiento(); //Polimorfismo
-    string Mandar_Posicion();
+#ifndef TORRE_H
+#define TORRE_H
+class Torre : public Pieza{
+    public: 
+    Torre(Pieza::int,int);
+    bool Validar_Movimiento(int x, int y); //Polimorfismo
+    ~Torre();
 };
+#endif

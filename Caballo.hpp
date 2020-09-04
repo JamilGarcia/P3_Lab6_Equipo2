@@ -1,26 +1,11 @@
-#include <iostream>
-#include <string>
 #include "Pieza.hpp"
-using namespace std;
-
-class Caballo : public Pieza
-{
-private:
-    //Ingresar Variables Privadas
-    
-
-public:
-    //Ingresar Variables Publicas
-    Caballo(int posX, int posY, char Simb)
-    {
-        
-    }
-
-    ~Caballo()
-    {
-        //Destructor
-    }
-
-    bool Validar_Movimiento(); //Polimorfismo
-    string Mandar_Posicion();
+#ifndef CABALLO_H
+#define CABALLO_H
+class Caballo : public Pieza{
+    public: 
+    Caballo(Pieza::int,int);
+    bool Validar_Movimiento(int x, int y);
+    ~Caballo();
 };
+
+#endif

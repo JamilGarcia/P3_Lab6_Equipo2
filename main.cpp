@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <conio.h>
 #include "Pieza.hpp"
 #include "Alfil.hpp"
 #include "Caballo.hpp"
