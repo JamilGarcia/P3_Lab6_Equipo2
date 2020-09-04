@@ -67,31 +67,7 @@ int main() {
     return 0;
 }
 
-<<<<<<< HEAD
-void  CrearTablero()
-{
-    //Creacion De Blancas
-}
-
-vector <Pieza> LPZ; 
-
-Pieza*** tablero;
-
-int main()
-{
-    tablero = new Pieza**[8];
-	for(int i=0; i<8;i++){
-		tablero[i]=new Pieza*[8];
-		for(int j=0; j<8;j++){
-			tablero[i][j]=NULL;
-		}
-	}	
-}
-
-Pieza** inicializar_Piezas(Pieza** tablero){
-=======
 Pieza*** inicializar_Piezas(Pieza*** tablero){
->>>>>>> abcf9ec33052ca6059e3e6a5a01475f52cabcc7d
     //Inicializar Piezas negras
     tablero[0][0] =  new Torre(0,0,'r');
     cout << "puso Torre1" << endl;
