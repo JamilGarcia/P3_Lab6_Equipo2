@@ -75,3 +75,10 @@ class Pieza {
         return simboloP;
     } //Polimorfismo De Nota2*/
 
+        Pieza(){}//Constructor
+        char getCaracter(){return caracter_pieza;}
+        virtual bool validar_movimiento(int, int) {
+            return true;
+        }
+        ~Pieza(){}
+};

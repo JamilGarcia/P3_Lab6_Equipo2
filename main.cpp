@@ -12,12 +12,45 @@ using namespace std;
 Pieza** inicializar_Piezas(Pieza**);
 int main() {
 
+    string nombre_jugador1;
+    string nombre_jugador2;
+    cout << "Jugar Ajedrez" << endl;
 
-    cout << "Jugar Ajedres" << endl;
-    Pieza**  tablero = new Pieza*[8];
-    for (int i = 0; i < 8; i++){
-        tablero[i] = new Pieza[8];
+    char seguir = 's';
+    while(seguir =='s') {
+        cout << "Opciones de Ajedrez" << endl
+        << "[1] Jugar" << endl
+        << "[2] Salir" << endl
+        << "Seleccione una opcion: ";
+        int opcion_usuario;
+        cin >> opcion_usuario;
+        cout << endl;
+        switch(opcion_usuario){
+            case 1:{
+                //Jugar
+                cout << "Ingrese nombre del jugador 1: ";
+                cin >> nombre_jugador1;
+                cout << endl;
+                cout << "Ingrese nombre del jugador 2: ";
+                cin >> nombre_jugador2;
+                cout << endl;
+
+                Pieza**  tablero = new Pieza*[8];
+                for (int i = 0; i < 8; i++){
+                    tablero[i] = new Pieza[8];
+                }
+                break;
+            }
+            case 2: {
+                cout << "Fin del Programa";
+                seguir = 'n';
+                break;
+            }
+            default:
+                cout << "Opcion Invalida";
+        }
     }
+    
     return 0;
 }
 
