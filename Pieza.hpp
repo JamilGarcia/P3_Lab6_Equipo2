@@ -1,83 +1,79 @@
 #pragma once
-class Pieza {
-    protected:
+#include <string>
+#include <iostream>
+using namespace std;
+
+class Pieza{
+protected:
     char caracter_pieza;
     int posicion_x;
     int posicion_y;
-    public:
-        Pieza();//Constructor
-        char getCaracter();
-        virtual bool validar_movimiento(int x, int y);
-        ~Pieza();
-};
+    Pieza*** tablero;
+    string color;
+    virtual validar_movimiento(int,int){return true}
+public:
+    Pieza(){} //Constructor
+    char getCaracter(){return caracter_pieza;}
+    string getColor(){return color;}
+    //void getTablero(Pieza ***tablero){this->tablero = tablero;}
+    ~Pieza(){}//Destructro
 
-    //} //Polimorfismo Obligado
+ virtual bool validar_posicion(int pos_x_incicial,int pos_y_inicial, int pos_x_final, int pos_y_final, Pieza*** tablero) {
+         bool validacion = true;
 
-    /*virtual string Mandar_Posicion()
-    {
-        string pos;
-        return pos;
-    } //Polimorfismo Pensado Para Imprimir mas adelante*/
+        if(validar_Posicion_Original(pos_x_incicial,pos_y_inicial)){
+            if(validarDentro(pos_x_final,pos_y_final)) {
+                //Posiciones estan dentro de la matriz
+                if(validar_movimiento(pos_x_final,pos_y_final)){
 
-    /*virtual int Mandar_X(char pos)
-    {
-        if (pos == 'a')
-        {
-            return 0;
+                }
+            } else {
+                cout <<"Movimiento Invalido\n";
+            } else {
+                cout <<"Movimiento Invalido\n";
+            }
         }
-        else if (pos == 'b')
-        {
-            return 1;
-        }
-        else if (pos == 'c')
-        {
-            return 2;
-        }
-        else if (pos == 'd')
-        {
-            return 3;
-        }
-        else if (pos == 'e')
-        {
-            return 4;
-        }
-        else if (pos == 'f')
-        {
-            return 5;
-        }
-        else if (pos == 'g')
-        {
-            return 6;
-        }
-        else if (pos == 'h')
-        {
-            return 7;
-        };
-
-    } //Polimorfismo De Nota2
-
-    virtual int Mandar_Y(int pos)
-    {
-        return pos; 
-    } //Polimorfismo De Nota2
-
-    virtual int PosActX(){
-        return PosX; 
+         
+         return validacion;
     }
-
-    virtual int PosActY(){
-        return PosY;
-    }
-
-    virtual char SimboloPieza()
-    {
-        return simboloP;
-    } //Polimorfismo De Nota2*/
-
-        Pieza(){}//Constructor
-        virtual char getCaracter(){return caracter_pieza;}
-        virtual bool validar_movimiento(int, int) {
+    bool validarDentro(int x, int y){
+        if ((x >= 0 && x < 8) && (y >= 0 && y < 8)){
             return true;
         }
-        ~Pieza(){}
+        return false;
+    }
+    bool validar_Posicion_Original(int x, int y){
+        if ((x >= 0 && x < 8) && (y >= 0 && y < 8)){
+            return true;
+        }
+        return false;
+    }
+
 };
+    /*virtual bool validar_movimiento(int x, int y, Pieza ***tablero){
+        bool temp = true;
+        if (validarDentro(x, y)){
+            if (validarP(x, y)){
+                if (Pieza *p = tablero[posicion_x][posicion_y]){
+                    delete p;
+                    tablero[x][y] = NULL;
+                }
+                tablero[x][y] = tablero[posicion_x][posicion_y];
+                tablero[posicion_x][posicion_y] = NULL;
+                posicion_x = x;
+                posicion_y = y;
+                return true;
+            }else{
+                cout << "Movimiento no valido" << endl;
+                temp = false;
+            }
+        }
+        return temp;
+    }*/
+
+    /*bool validarDentro(int x, int y){
+        if ((x >= 0 && x < 8) && (y >= 0 && y < 8)){
+            return true;
+        }
+        return false;
+    }*/

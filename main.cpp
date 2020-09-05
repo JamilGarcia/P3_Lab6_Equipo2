@@ -77,6 +77,8 @@ int main()
     return 0;
 }
 
+
+
 void imprimir_Tablero_Jugador1(Pieza ***tablero, string nombre_jugador1, string nombre_jugador_2){
     cout << nombre_jugador1 << endl;
     int contador_columna = 8;
