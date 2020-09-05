@@ -8,6 +8,7 @@ class Rey : public Pieza{
         this->posicion_y = pos_y;
         this->caracter_pieza = caracter_pieza;
     }
+    virtual char getCaracter(){return caracter_pieza;}
     bool Validar_Movimiento(int x, int y){return true;} //Polimorfismo
     ~Rey(){}
 };

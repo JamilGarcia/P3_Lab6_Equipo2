@@ -9,6 +9,7 @@ class Peon : public Pieza {
         this->posicion_y = pos_y;
         this->caracter_pieza = caracter_pieza;
     }
+    virtual char getCaracter(){return caracter_pieza;}
     virtual bool validar_movimiento(int x, int y){return true;}
     ~Peon(){}
 };
