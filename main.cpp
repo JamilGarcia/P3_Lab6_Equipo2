@@ -10,7 +10,6 @@
 
 using namespace std;
 
-
 Pieza*** inicializar_Piezas(Pieza ***);
 void imprimir_Tablero_Jugador1(Pieza ***, string, string);
 void imprimir_Tablero_Jugador2(Pieza ***, string,string);
@@ -74,7 +73,12 @@ int main(){
                         posicion_x_1 = conseguir_posicionX(coordenada_inicial, false);//Conseguimos coordenada x inicial de la pieza
                         //Coordenadas de posicion a intentar mover
                         posicion_x_2 = conseguir_posicionX(coordenada_movimiento, false);
-                        posicion_y_2 = conseguir_posicionX(coordenada_movimiento, false);
+                        posicion_y_2 = conseguir_posicionY(coordenada_movimiento, false);
+                        cout << posicion_x_2 << ";" << posicion_y_2 << endl;
+
+                        //Llamar a metodo validar_movimiento
+                        Pieza* pieza_seleccionada = tablero[posicion_x_1][posicion_y_1];
+                        pieza_seleccionada->validar_movimiento(posicion_x_1, posicion_y_1, posicion_x_2, posicion_y_2, tablero);
                         cout << endl;
                         turno++;
                     }
@@ -138,9 +142,8 @@ int conseguir_posicionY(string posicion_pieza, bool color){
         case 'h':
             temporal_y = 7;
             break;    
-        
         default:
-        temporal_y = 0;
+        temporal_y = 9;
             break;
         }
     } else {
@@ -170,9 +173,8 @@ int conseguir_posicionY(string posicion_pieza, bool color){
         case 'a':
             temporal_y = 7;
             break;    
-        
         default:
-            temporal_y = 0;
+            temporal_y = 9;
             break;
         }
     }
@@ -210,7 +212,7 @@ int conseguir_posicionX(string posicion_pieza,bool color){
             temporal_x = 7;
             break;
         default:
-            temporal_x = 0;
+            temporal_x = 9;
             break;
         }
     } else {
@@ -241,6 +243,7 @@ int conseguir_posicionX(string posicion_pieza,bool color){
             temporal_x = 7;
             break;
         default:
+            temporal_x = 9;
             break;
         }
     }
