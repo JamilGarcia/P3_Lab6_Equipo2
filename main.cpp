@@ -10,7 +10,8 @@
 
 using namespace std;
 
-Pieza ***inicializar_Piezas(Pieza ***);
+
+Pieza*** inicializar_Piezas(Pieza ***);
 void imprimir_Tablero_Jugador1(Pieza ***, string, string);
 void imprimir_Tablero_Jugador2(Pieza ***, string,string);
 int conseguir_posicionX(string,bool);
@@ -246,7 +247,7 @@ int conseguir_posicionX(string posicion_pieza,bool color){
     return temporal_x;
 }
 
-void imprimir_Tablero_Jugador1(Pieza ***tablero, string nombre_jugador1, string nombre_jugador_2){
+void imprimir_Tablero_Jugador1(Pieza*** tablero, string nombre_jugador1, string nombre_jugador_2){
     cout << "   "<< nombre_jugador_2 << endl;
     int contador_columna = 8;
     for (int i = 0; i < 8; i++){
@@ -257,17 +258,16 @@ void imprimir_Tablero_Jugador1(Pieza ***tablero, string nombre_jugador1, string 
             } else {
                 if(tablero[i][j] == NULL) {
                     if(j== 7){
-                        cout << "|  |";
+                        cout << "|   |";
                     } else {
                         cout << "|   | ";
                     }
                 } else {
                     if(j == 7){
-                        cout << "| " << tablero[i][j]->getCaracter() << "|";
+                        cout << "| " << tablero[i][j]->getCaracter() << " |";
                     } else {
                         cout << "| " << tablero[i][j]->getCaracter() << " | ";
                     }
-                
                 }
             }
         }
@@ -295,59 +295,58 @@ void imprimir_Tablero_Jugador2(Pieza ***tablero, string nombre_jugador1, string 
                     }
                 } else {
                     if(j == 7){
-                        cout << "| " << tablero[i][j]->getCaracter() << "|";
+                        cout << "| " << tablero[i][j]->getCaracter() << " |";
                     } else {
                         cout << "| " << tablero[i][j]->getCaracter() << " | ";
                     }
-                
                 }
             }
         }
         cout << endl;
-        
     }
     cout << "    [h]   [g]   [f]   [e]   [d]   [c]   [b]   [a]" << endl;
     cout << "   " <<nombre_jugador_2 << endl;
 }
-Pieza*** inicializar_Piezas(Pieza ***tablero){
+
+Pieza*** inicializar_Piezas(Pieza*** tablero){
     //Inicializar Piezas negras
-    tablero[0][0] = new Torre(0, 0, 'r');
-    tablero[0][7] = new Torre(0, 7, 'r');
+    tablero[0][0] = new Torre(0, 0, 'r',"negro");
+    tablero[0][7] = new Torre(0, 7, 'r', "negro");
     //Inicializar Caballos Negros
-    tablero[0][1] = new Caballo(0, 1, 'n');
-    tablero[0][6] = new Caballo(0, 6, 'n');
+    tablero[0][1] = new Caballo(0, 1, 'n',"negro");
+    tablero[0][6] = new Caballo(0, 6, 'n',"negro");
     //Inicializar Alfin Negro
-    tablero[0][2] = new Alfil(0, 2, 'b');
-    tablero[0][5] = new Alfil(0, 5, 'b');
+    tablero[0][2] = new Alfil(0, 2, 'b',"negro");
+    tablero[0][5] = new Alfil(0, 5, 'b',"negro");
     //Inicializar Rey Negro
-    tablero[0][4] = new Rey(0, 4, 'k');
+    tablero[0][4] = new Rey(0, 4, 'k',"negro");
     //Inicializar Reina Negro
-    tablero[0][3] = new Reina(0, 3, 'q');
+    tablero[0][3] = new Reina(0, 3, 'q',"negro");
 
     //Peones Negros
     for (int i = 0; i < 8; i++){
-        tablero[1][i] = new Peon(1, i, 'p');
+        tablero[1][i] = new Peon(1, i, 'p',"negro");
     }
 
     //Inicializar Piezas Blancas
     //Torres Blancas
-    tablero[7][0] = new Torre(7, 0, 'R');
-    tablero[7][7] = new Torre(7, 7, 'R');
+    tablero[7][0] = new Torre(7, 0, 'R',"blanco");
+    tablero[7][7] = new Torre(7, 7, 'R',"blanco");
     //Inicializar Caballos Blancas
-    tablero[7][1] = new Caballo(7, 1, 'N');
-    tablero[7][6] = new Caballo(7, 6, 'N');
+    tablero[7][1] = new Caballo(7, 1, 'N',"blanco");
+    tablero[7][6] = new Caballo(7, 6, 'N',"blanco");
     //Inicializar Alfin Blancas
-    tablero[7][2] = new Alfil(7, 2, 'B');
-    tablero[7][5] = new Alfil(7, 5, 'B');
+    tablero[7][2] = new Alfil(7, 2, 'B',"blanco");
+    tablero[7][5] = new Alfil(7, 5, 'B',"blanco");
 
     //Inicializar Rey Blancas
-    tablero[7][4] = new Rey(7, 4, 'K');
+    tablero[7][4] = new Rey(7, 4, 'K',"blanco");
     //Inicializar Reina Blanca
-    tablero[7][3] = new Reina(7, 3, 'Q');
+    tablero[7][3] = new Reina(7, 3, 'Q',"blanco");
 
     //Peones Blancas
     for (int i = 0; i < 8; i++){
-        tablero[6][i] = new Peon(6, i, 'P');
+        tablero[6][i] = new Peon(6, i, 'P',"blanco");
     }
     return tablero;
 }
