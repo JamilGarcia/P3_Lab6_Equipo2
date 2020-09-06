@@ -65,14 +65,14 @@ bool Alfil::validarAlfil(char alfil, int x_inicial, int y_inicial, int x_final, 
     bool sub_temporal = true;
     if(alfil == 'B'){
         //Turno de Jugador 1
-        int contador_piezas = 0;
+        int contador_piezas_jug1 = 0;
         string direccion_alfil = " ";
         //Determinar Direccion de Alfil
 
         //Esquina Derecha(Arriba y Derecha)
         if(x_final < x_inicial && y_final > y_inicial){
             direccion_alfil = "derecha_superior";
-        } else if(x_final > x_inicial && y_final > y_inicial)c{
+        } else if(x_final > x_inicial && y_final > y_inicial){
             //Esquina Derecha inferior
             direccion_alfil = "derecha_inferior";
         } else if(x_final > x_inicial && y_final < y_inicial){
@@ -83,13 +83,184 @@ bool Alfil::validarAlfil(char alfil, int x_inicial, int y_inicial, int x_final, 
             direccion_alfil = "izquiera_superior";
         } else {
             //Posicionamiento Invalida
-            sub_temporal = false;
-            cout << "El alfil no puede moverse a esa posicion\n\n";
+            direccion_alfil = "invalida";
         }
+
+        //Dependiendo de la direccion buscar en diagonal
+        if(direccion_alfil == "derecha_superior"){
+            //Esquina Derecha Superior
+            int contador_derecha_sup= 1;
+            for ( int i = x_inicial -1; i > x_final; i--){
+                for ( int j = y_inicial + 1;j < y_final ; j++){
+                    if(j == y_inicial + contador_derecha_sup && i == x_inicial - contador_derecha_sup){
+                        contador_derecha_sup++;
+                        //Busca en el camino antes de la posicion final
+                        if(tablero[i][j] != NULL){
+                            contador_piezas_jug1++;
+                        }
+                    }   
+                }
+            }
+        } else if(direccion_alfil == "derecha_inferior"){
+            //Esquina Derecha Inferior
+            int contador_derecha_inf = 1;
+            for ( int i = x_inicial +1; i < x_final; i++){
+                for ( int j = y_inicial + 1;j < y_final ; j++){
+                    if(j == y_inicial + contador_derecha_inf && i == x_inicial + contador_derecha_inf){
+                        contador_derecha_inf++;
+                        //Busca en el camino antes de la posicion final
+                        if(tablero[i][j] != NULL){
+                            contador_piezas_jug1++;
+                        }
+                    }   
+                }
+            }
+        } else if(direccion_alfil == "izquiera_inferior"){
+            //Esquina Izquierda Inferior
+            int contador_izq_inferior = 1;
+            for ( int i = x_inicial +1; i < x_final; i++){
+                for ( int j = y_inicial - 1;j > y_final ; j--){
+                    if(j == y_inicial - contador_izq_inferior && i == x_inicial + contador_izq_inferior){
+                        //cout << "[" << i << "," << j << "]" << endl;
+                        contador_izq_inferior++;
+                        //Busca en el camino antes de la posicion final
+                        if(tablero[i][j] != NULL){
+                            contador_piezas_jug1++;
+                        }
+                    }   
+                }
+            }
+        } else if(direccion_alfil =="izquiera_superior" ){
+            //Esquina Izquierda Superior
+            int contador_izq_superior = 1;
+            for ( int i = x_inicial  - 1; i > x_final; i--){
+                for ( int j = y_inicial - 1;j > y_final ; j--){
+                    if(j == y_inicial - contador_izq_superior && i == x_inicial - contador_izq_superior){
+                        cout << "[" << i << "," << j << "]" << endl;
+                        contador_izq_superior++;
+                        //Busca en el camino antes de la posicion final
+                        if(tablero[i][j] != NULL){
+                            contador_piezas_jug1++;
+                        }
+                    }   
+                }
+            }
+        } else {
+            //Posicion Final Invalida
+            cout << "La torre no puede llegar a esa posicion\n\n";
+            sub_temporal = false;
+            contador_piezas_jug1 = 1;
+        }
+
+        if(contador_piezas_jug1 == 0){
+            //Puede avanzar porque no hay piezas en el camino
+            sub_temporal = true;
+        } else {
+            //Encontro minimo 1 pieza en el camino asi que no puede avanzar
+            sub_temporal = false;
+            if(direccion_alfil != "invalida")
+                cout << "El alfil no se puede mover ya que hay piezas en el camino\n\n";
+        } 
 
     } else {
         //Turno de Jugador 2
-        int contador_piezas = 0;
+        int contador_piezas_jug2 = 0;
+        string direccion_alfil = " ";
+        //Determinar Direccion de Alfil
+
+        //Esquina Derecha(Arriba y Derecha)
+        if(x_final > x_inicial && y_final > y_inicial){
+            direccion_alfil = "derecha_superior";
+        } else if(x_final < x_inicial && y_final > y_inicial){
+            //Esquina Derecha inferior
+            direccion_alfil = "derecha_inferior\n";
+        } else if(x_final < x_inicial && y_final < y_inicial){
+            //Esquina Izquierda Inferior
+            direccion_alfil = "izquiera_inferior";
+        } else if(x_final > x_inicial && y_final < y_inicial){
+            //Esquina Izquierda Superior
+            direccion_alfil = "izquiera_superior";
+        } else {
+            //Posicionamiento Invalida
+            direccion_alfil = "invalida";
+        }
+
+        //Dependiendo de la direccion buscar en diagonal
+        /*if(direccion_alfil == "derecha_superior"){
+            //Esquina Derecha Superior
+            int contador_derecha_sup= 1;
+            for ( int i = x_inicial -1; i > x_final; i--){
+                for ( int j = y_inicial + 1;j < y_final ; j++){
+                    if(j == y_inicial + contador_derecha_sup && i == x_inicial - contador_derecha_sup){
+                        contador_derecha_sup++;
+                        //Busca en el camino antes de la posicion final
+                        if(tablero[i][j] != NULL){
+                            contador_piezas_jug1++;
+                        }
+                    }   
+                }
+            }
+        } else if(direccion_alfil == "derecha_inferior"){
+            //Esquina Derecha Inferior
+            int contador_derecha_inf = 1;
+            for ( int i = x_inicial +1; i < x_final; i++){
+                for ( int j = y_inicial + 1;j < y_final ; j++){
+                    if(j == y_inicial + contador_derecha_inf && i == x_inicial + contador_derecha_inf){
+                        contador_derecha_inf++;
+                        //Busca en el camino antes de la posicion final
+                        if(tablero[i][j] != NULL){
+                            contador_piezas_jug1++;
+                        }
+                    }   
+                }
+            }
+        } else if(direccion_alfil == "izquiera_inferior"){
+            //Esquina Izquierda Inferior
+            int contador_izq_inferior = 1;
+            for ( int i = x_inicial +1; i < x_final; i++){
+                for ( int j = y_inicial - 1;j > y_final ; j--){
+                    if(j == y_inicial - contador_izq_inferior && i == x_inicial + contador_izq_inferior){
+                        //cout << "[" << i << "," << j << "]" << endl;
+                        contador_izq_inferior++;
+                        //Busca en el camino antes de la posicion final
+                        if(tablero[i][j] != NULL){
+                            contador_piezas_jug1++;
+                        }
+                    }   
+                }
+            }
+        } else if(direccion_alfil =="izquiera_superior" ){
+            //Esquina Izquierda Superior
+            int contador_izq_superior = 1;
+            for ( int i = x_inicial  - 1; i > x_final; i--){
+                for ( int j = y_inicial - 1;j > y_final ; j--){
+                    if(j == y_inicial - contador_izq_superior && i == x_inicial - contador_izq_superior){
+                        cout << "[" << i << "," << j << "]" << endl;
+                        contador_izq_superior++;
+                        //Busca en el camino antes de la posicion final
+                        if(tablero[i][j] != NULL){
+                            contador_piezas_jug1++;
+                        }
+                    }   
+                }
+            }
+        } else {
+            //Posicion Final Invalida
+            cout << "La torre no puede llegar a esa posicion\n\n";
+            sub_temporal = false;
+            contador_piezas_jug1 = 1;
+        }
+        */
+        if(contador_piezas_jug2 == 0){
+            //Puede avanzar porque no hay piezas en el camino
+            sub_temporal = true;
+        } else {
+            //Encontro minimo 1 pieza en el camino asi que no puede avanzar
+            sub_temporal = false;
+            if(direccion_alfil != "invalida")
+                cout << "El alfil no se puede mover ya que hay piezas en el camino\n\n";
+        }
+
     }
     return sub_temporal;
 }

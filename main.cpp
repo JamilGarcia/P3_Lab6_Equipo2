@@ -236,6 +236,16 @@ int main(){
                                 }
                                 break;
                             }
+                            case 'b': {
+                                Alfil* alfil = dynamic_cast<Alfil*>(tablero[x_inicial][y_inicial]);
+                                movimiento_valido_jug2 = alfil->validar_movimiento('b',x_inicial,y_inicial,x_final,y_final,tablero);
+                                if(movimiento_valido_jug2){
+                                    cout << "hola movimiento jugador 2 completado\n";
+                                    tablero[x_inicial][y_inicial] = NULL;
+                                    tablero[x_final][y_final] = alfil;
+                                }
+                                break;
+                            }
                             default:
                                 //cout << "Movimiento Invalido -- Eligio una pieza que no le corresponde.\n\n";
                                 movimiento_valido_jug2 = false;
@@ -273,6 +283,7 @@ int main(){
 void inicializar_Piezas(Pieza*** tablero){
     //Inicializar piezas negras
     tablero[4][4] = new Alfil(4,4,'B',"bslanco");//Alfil de prueba
+    tablero[3][2] = new Alfil(2,3,'b',"negro");//Alfil de prueba
     //Alfil negros
     //Torres negras
     //tablero[1][4] = new Torre(0,4,'r',"negro");
