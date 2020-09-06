@@ -12,6 +12,7 @@ char Peon::getCaracter(){ return caracter_pieza;}
 
 string Peon::getColor() { return color_pieza; }
 
+int Peon::getTurno() {return this->turno;}
 Peon::~Peon() {}
 
 bool Peon::validar_movimiento(char peon, int x_inicial, int y_inicial, int x_final, int y_final, Pieza ***tablero){
@@ -36,24 +37,36 @@ bool Peon::validar_movimiento(char peon, int x_inicial, int y_inicial, int x_fin
             // El peón quiere moverse hacia adelante
             if (peon == 'P'){
                 // Turno del jugador 1
-                if (x_inicial - 1 == x_final){
+                if (x_inicial - 1 == x_final && y_inicial == y_final){
+                    this->turno++;
                     temp = true;
                 } else if(x_inicial ==  6 && (x_inicial - 2 == x_final )) {
                     //Caso de Primer Movimiento Para 2 espacios adelante 
                     temp =true;
-                } else {
+                } else if(x_inicial == 3 && y_inicial - 1 == y_final){
+                    //Caso comer al paso por lado izquierdo
+                    temp = true;
+                } else if(x_inicial == 3 && y_inicial + 1 == y_final){
+                    //Caso comer al paso por lado derecho
+                    temp = true;
+                }else {
                     temp = false;
                 }
             }else{
                 // Turno del jugador 2
                 if (x_inicial + 1 == x_final){
+                    this->turno++;
                     temp = true;
-                    //return true;
                 } else if(x_inicial == 1 && (x_inicial + 2 == x_final)){
                     //Caso de Primer Movimiento Para 2 espacios adelante 
                     temp = true;
-                    //return true;
-                } else {
+                } else if(x_inicial == 5 && y_inicial - 1 == y_final){
+                    //Caso comer al paso por lado izquierdo
+                    temp = true;
+                } else if(x_inicial == 5 && y_inicial + 1 == y_final){
+                    //Caso comer al paso por lado derecho
+                    temp = true;
+                }else {
                     temp = false;
                 }
             }

@@ -5,6 +5,7 @@
 
 class Peon : public Pieza{
     private:
+        int turno = 1;
         int posicion_x;
         int posicion_y;
         char caracter_pieza;
@@ -14,6 +15,7 @@ class Peon : public Pieza{
         virtual bool validar_movimiento(char,int,int,int,int,Pieza***);
         virtual char getCaracter();
         virtual std::string getColor();
+        int getTurno();
         ~Peon();
 };
 #endif
