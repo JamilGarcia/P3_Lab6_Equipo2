@@ -282,7 +282,7 @@ int main(){
 
 void inicializar_Piezas(Pieza*** tablero){
     //Inicializar piezas negras
-    tablero[4][4] = new Alfil(4,4,'B',"bslanco");//Alfil de prueba
+    //tablero[4][4] = new Alfil(4,4,'B',"bslanco");//Alfil de prueba
     tablero[3][2] = new Alfil(2,3,'b',"negro");//Alfil de prueba
     //Alfil negros
     //Torres negras
@@ -307,9 +307,9 @@ void inicializar_Piezas(Pieza*** tablero){
     //tablero[7][1] = new Caballo(7,2,'N',"blanco");
     //tablero[7][6] = new Caballo(7,6,'N',"blanco");
     //Peones blancos
-    /*for (int i = 0; i < 8; i++){
+    for (int i = 0; i < 8; i++){
         tablero[6][i] = new Peon(6,i,'P',"blanco");
-    }*/
+    }
 }
 
 bool enrocarse(int x_in, int y_in, int x_fi, int y_fi, Pieza*** tablero, Torre* torre, int ReyX, int ReyY){
