@@ -14,7 +14,7 @@ void imprimir_tablero_Jugador1(Pieza***,string,string);
 void imprimir_tablero_Jugador2(Pieza***,string,string);
 int conseguir_posicionX(char,bool);
 int conseguir_posicionY(char,bool);
-bool Coronamiento(int, int);
+bool Coronamiento(int,int,char , Pieza***);
 bool enrocarse(int, int, int, int, Pieza***, Torre*, int, int);
 bool comer_al_Paso(char,int,int,int,int,Pieza***);
 
@@ -87,24 +87,22 @@ int main(){
                                 if(movimiento_valido_jug1){
                                 bool verificar_movimiento_especial = true;
                                 //Validar el comer al paso
-                                verificar_movimiento_especial = comer_al_Paso('P',x_inicial,y_inicial,x_final,y_final,tablero);
-                                if(verificar_movimiento_especial){
-                                    tablero[x_inicial][y_inicial] = NULL;
-                                    tablero[x_final][y_final] = peon; 
-                                } else{
-                                    //No realizo el comer al paso pero igual se mueve
-                                    cout << "hola movimiento jugador 1 completado\n";
-                                    tablero[x_inicial][y_inicial] = NULL;
-                                    tablero[x_final][y_final] = peon;
-                                }
-                                
-
-                                /*if(Coronamiento(y_final, 'P')){
-                                    Reina* PeonCoronado = new Reina(); //Parametros de Reina
-                                    tablero[x_inicial][y_inicial] = NULL;
-                                    tablero[x_final][y_final] = PeonCoronado;
-                                }*/
-                                    
+                                    verificar_movimiento_especial = comer_al_Paso('P',x_inicial,y_inicial,x_final,y_final,tablero);
+                                    if(verificar_movimiento_especial){
+                                        tablero[x_inicial][y_inicial] = NULL;
+                                        tablero[x_final][y_final] = peon; 
+                                    } else{
+                                        //No realizo el comer al paso pero igual se mueve
+                                        //Vamos a ver si se corono
+                                        cout << "hola movimiento jugador 1 completado\n";
+                                            tablero[x_inicial][y_inicial] = NULL;
+                                            tablero[x_final][y_final] = peon;
+                                        /*if(Coronamiento(x_final,y_final,'P',tablero)){
+                                            //Reina* PeonCoronado = new Reina(); //Parametros de Reina
+                                            tablero[x_inicial][y_inicial] = NULL;
+                                        } else {
+                                        }*/
+                                    }    
                                 }
                                 break;
                             }
@@ -131,17 +129,6 @@ int main(){
                             case 'R': {
                                 Torre* torre = dynamic_cast<Torre*>(tablero[x_inicial][y_inicial]);
                                 movimiento_valido_jug1 = torre->validar_movimiento('R',x_inicial,y_inicial,x_final,y_final,tablero);
-                                /*if(enrocarse(x_inicial, y_inicial, x_final, y_final, tablero, torre, 4, 7)){
-                                    Rey* rey = dynamic_cast<Rey*>(tablero[x_final][y_final]);
-                                    tablero[x_inicial][y_inicial] = NULL;
-                                    tablero[x_final-1][y_final] = torre;
-                                    tablero[x_final][y_final] = NULL;
-                                    if(tablero[x_final-2][y_final] == NULL){
-                                        tablero[x_final - 2][y_final] = rey;
-                                    } else {
-                                        tablero[x_final + 2][y_final] = rey;
-                                    }
-                                }*/
                                 if(movimiento_valido_jug1){
                                     cout << "hola movimiento jugador 1 completado\n";
                                     tablero[x_inicial][y_inicial] = NULL;
@@ -208,20 +195,21 @@ int main(){
                                 Peon* peon = dynamic_cast<Peon*>(tablero[x_inicial][y_inicial]);
                                 movimiento_valido_jug2 = peon->validar_movimiento('p',x_inicial,y_inicial,x_final,y_final,tablero);
                                 if(movimiento_valido_jug2){
-                                bool verificar_movimiento_especial = true;
-                                //Validar el comer al paso
-                                verificar_movimiento_especial = comer_al_Paso('p',x_inicial,y_inicial,x_final,y_final,tablero);
-                                if(verificar_movimiento_especial){
-                                    tablero[x_inicial][y_inicial] = NULL;
-                                    tablero[x_final][y_final] = peon; 
-                                } else{
-                                    //No realizo el comer al paso pero igual se mueve
-                                    cout << "hola movimiento jugador 2 completado\n";
-                                    tablero[x_inicial][y_inicial] = NULL;
-                                    tablero[x_final][y_final] = peon;
+                                    bool verificar_movimiento_especial = true;
+                                    //Validar el comer al paso
+                                    verificar_movimiento_especial = comer_al_Paso('p',x_inicial,y_inicial,x_final,y_final,tablero);
+                                    if(verificar_movimiento_especial){
+                                        tablero[x_inicial][y_inicial] = NULL;
+                                        tablero[x_final][y_final] = peon; 
+                                    } else{
+                                        //No realizo el comer al paso pero igual se mueve
+                                        cout << "hola movimiento jugador 2 completado\n";
+                                        tablero[x_inicial][y_inicial] = NULL;
+                                        tablero[x_final][y_final] = peon;
+                                    }
                                 }
-                            break;
                             }
+                            break;
                             case 'n': {
                                 Caballo* caballo = dynamic_cast<Caballo*>(tablero[x_inicial][y_inicial]);
                                 movimiento_valido_jug2 = caballo->validar_movimiento('n',x_inicial,y_inicial,x_final,y_final,tablero);
@@ -245,17 +233,6 @@ int main(){
                             case 'r': {
                                 Torre* torre = dynamic_cast<Torre*>(tablero[x_inicial][y_inicial]);
                                 movimiento_valido_jug2 = torre->validar_movimiento('r',x_inicial,y_inicial,x_final,y_final,tablero);
-                                /*if(enrocarse(x_inicial, y_inicial, x_final, y_final, tablero, torre, 4, 7)){
-                                    Rey* rey = dynamic_cast<Rey*>(tablero[x_final][y_final]);
-                                    tablero[x_inicial][y_inicial] = NULL;
-                                    tablero[x_final-1][y_final] = torre;
-                                    tablero[x_final][y_final] = NULL;
-                                    if(tablero[x_final-2][y_final] == NULL){
-                                        tablero[x_final - 2][y_final] = rey;
-                                    } else {
-                                        tablero[x_final + 2][y_final] = rey;
-                                    }
-                                }*/
                                 if(movimiento_valido_jug2){
                                     cout << "hola movimiento jugador 2 completado\n";
                                     tablero[x_inicial][y_inicial] = NULL;
@@ -366,7 +343,7 @@ bool comer_al_Paso(char peon, int x_inicial, int y_inicial, int x_final, int y_f
                     //No intenta comer al paso
                 }
             } else {
-                temp = false;//Hay una pieza o algo
+                temp_comeralPaso = false;//Hay una pieza o algo
             }
         } else if(x_inicial == 3 && tablero[x_inicial][y_inicial + 1] == dynamic_cast<Peon*>(tablero[x_inicial][y_inicial + 1])){
             //Es un peon a la derecha
@@ -428,7 +405,6 @@ bool comer_al_Paso(char peon, int x_inicial, int y_inicial, int x_final, int y_f
 
     }
     return temp_comeralPaso;
-
 }
 
 bool enrocarse(int x_in, int y_in, int x_fi, int y_fi, Pieza*** tablero, Torre* torre, int ReyX, int ReyY){
@@ -440,21 +416,46 @@ bool enrocarse(int x_in, int y_in, int x_fi, int y_fi, Pieza*** tablero, Torre* 
     return false;
 }
 
-bool Coronamiento(int posY, char simb){
-    if (simb == 'P'){
-        if(posY == 0){
+bool Coronamiento(int x_final,int y_final, char peon, Pieza*** tablero){
+    if (peon == 'P'){
+        //Caso Jugador 1
+        if(x_final == 0){
+            int seleccion_coronacion;
+            cout << "Cambiar Peon a:" << endl
+                << "[1] Reina" << endl
+                << "[2] Caballo" << endl
+                << "[3] Alfil" << endl
+                << "[4]Torre" << endl
+                << "Seleccione una opcion: ";
+            cin >> seleccion_coronacion;
+
+            switch (seleccion_coronacion){
+            case 1:
+                //Reina
+                tablero[x_final][y_final] = new Reina(x_final,y_final,'Q',"blanco");
+                break;
+            case 2:
+                //Caballo
+                tablero[x_final][y_final] = new Caballo(x_final,y_final,'N',"blanco");
+                break;
+            case 3:
+                //Alfil
+                tablero[x_final][y_final] = new Alfil(x_final,y_final,'B',"blanco");
+                break;
+            case 4:
+                //Torre
+                tablero[x_final][y_final] = new Torre(x_final,y_final,'R',"blanco");
+                break;
+            default:
+                break;
+            }
+            cout << "El Peon se corono exitosamente\n\n";
             return true;
-        } else {
+        }else {
             return false;
         }
-    } else if (simb == 'p'){
-        if(posY == 7){
-            return true; 
-        } else {
-            return false;
-        }
-    }else{
-        return false;
+    } else {
+        //Caso Jugador 2
     }
 }
 
