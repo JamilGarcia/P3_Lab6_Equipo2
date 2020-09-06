@@ -135,6 +135,16 @@ int main(){
                                 }
                                 break;
                             }
+                            case 'B': {
+                                Alfil* alfil = dynamic_cast<Alfil*>(tablero[x_inicial][y_inicial]);
+                                movimiento_valido_jug1 = alfil->validar_movimiento('B',x_inicial,y_inicial,x_final,y_final,tablero);
+                                if(movimiento_valido_jug1){
+                                    cout << "hola movimiento jugador 1 completado\n";
+                                    tablero[x_inicial][y_inicial] = NULL;
+                                    tablero[x_final][y_final] = alfil;
+                                }
+                                break;
+                            }
                             default:
                                 cout << "Movimiento Invalido -- Eligio una pieza que no le corresponde.\n\n";
                                 movimiento_valido_jug1 = false;
@@ -262,9 +272,11 @@ int main(){
 
 void inicializar_Piezas(Pieza*** tablero){
     //Inicializar piezas negras
+    tablero[4][4] = new Alfil(4,4,'B',"bslanco");//Alfil de prueba
+    //Alfil negros
     //Torres negras
-    tablero[1][4] = new Torre(0,4,'r',"negro");
-    tablero[0][7] = new Torre(0,7,'r',"negro");
+    //tablero[1][4] = new Torre(0,4,'r',"negro");
+    //tablero[0][7] = new Torre(0,7,'r',"negro");
     //Rey negro
     //tablero[0][4] = new Rey(0,4,'k',"negro"); 
     //Caballos negros
@@ -276,8 +288,8 @@ void inicializar_Piezas(Pieza*** tablero){
     }*/
     //Inicializar piezas blancas
     //Torres blancas
-    tablero[4][4] = new Torre(4,4,'R',"blanco");
-    tablero[7][7] = new Torre(7,7,'R',"blanco");
+    //tablero[4][4] = new Torre(4,4,'R',"blanco");
+    //tablero[7][7] = new Torre(7,7,'R',"blanco");
     //Rey blanco
     //tablero[7][4] = new Rey(0,4,'K',"blanco"); 
     //Caballos blancos

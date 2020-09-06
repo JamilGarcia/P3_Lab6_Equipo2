@@ -62,5 +62,34 @@ bool Alfil::validar_movimiento(char alfil, int x_inicial, int y_inicial, int x_f
 }
 
 bool Alfil::validarAlfil(char alfil, int x_inicial, int y_inicial, int x_final, int y_final, Pieza*** tablero){
+    bool sub_temporal = true;
+    if(alfil == 'B'){
+        //Turno de Jugador 1
+        int contador_piezas = 0;
+        string direccion_alfil = " ";
+        //Determinar Direccion de Alfil
 
+        //Esquina Derecha(Arriba y Derecha)
+        if(x_final < x_inicial && y_final > y_inicial){
+            direccion_alfil = "derecha_superior";
+        } else if(x_final > x_inicial && y_final > y_inicial)c{
+            //Esquina Derecha inferior
+            direccion_alfil = "derecha_inferior";
+        } else if(x_final > x_inicial && y_final < y_inicial){
+            //Esquina Izquierda Inferior
+            direccion_alfil = "izquiera_inferior";
+        } else if(x_final < x_inicial && y_final < y_inicial){
+            //Esquina Izquierda Inferior
+            direccion_alfil = "izquiera_superior";
+        } else {
+            //Posicionamiento Invalida
+            sub_temporal = false;
+            cout << "El alfil no puede moverse a esa posicion\n\n";
+        }
+
+    } else {
+        //Turno de Jugador 2
+        int contador_piezas = 0;
+    }
+    return sub_temporal;
 }
