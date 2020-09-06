@@ -110,7 +110,7 @@ int main(){
                                 Caballo* caballo = dynamic_cast<Caballo*>(tablero[x_inicial][y_inicial]);
                                 movimiento_valido_jug1 = caballo->validar_movimiento('N',x_inicial,y_inicial,x_final,y_final,tablero);
                                 if(movimiento_valido_jug1){
-                                    cout << "hola movimiento jugador 1 completado\n";
+                                    cout << "movimiento jugador 1 completado\n";
                                     tablero[x_inicial][y_inicial] = NULL;
                                     tablero[x_final][y_final] = caballo;
                                 }
@@ -120,7 +120,7 @@ int main(){
                                 Rey* rey = dynamic_cast<Rey*>(tablero[x_inicial][y_inicial]);
                                 movimiento_valido_jug1 = rey->validar_movimiento('K',x_inicial,y_inicial,x_final,y_final,tablero);
                                 if(movimiento_valido_jug1){
-                                    cout << "hola movimiento jugador 1 completado\n";
+                                    cout << "movimiento jugador 1 completado\n";
                                     tablero[x_inicial][y_inicial] = NULL;
                                     tablero[x_final][y_final] = rey;
                                 }
@@ -130,7 +130,7 @@ int main(){
                                 Torre* torre = dynamic_cast<Torre*>(tablero[x_inicial][y_inicial]);
                                 movimiento_valido_jug1 = torre->validar_movimiento('R',x_inicial,y_inicial,x_final,y_final,tablero);
                                 if(movimiento_valido_jug1){
-                                    cout << "hola movimiento jugador 1 completado\n";
+                                    cout << "movimiento jugador 1 completado\n";
                                     tablero[x_inicial][y_inicial] = NULL;
                                     tablero[x_final][y_final] = torre;
                                 }
@@ -140,7 +140,7 @@ int main(){
                                 Alfil* alfil = dynamic_cast<Alfil*>(tablero[x_inicial][y_inicial]);
                                 movimiento_valido_jug1 = alfil->validar_movimiento('B',x_inicial,y_inicial,x_final,y_final,tablero);
                                 if(movimiento_valido_jug1){
-                                    cout << "hola movimiento jugador 1 completado\n";
+                                    cout << "movimiento jugador 1 completado\n";
                                     tablero[x_inicial][y_inicial] = NULL;
                                     tablero[x_final][y_final] = alfil;
                                 }
@@ -150,7 +150,7 @@ int main(){
                                 Reina* reina = dynamic_cast<Reina*>(tablero[x_inicial][y_inicial]);
                                 movimiento_valido_jug1 = reina->validar_movimiento('Q',x_inicial,y_inicial,x_final,y_final,tablero);
                                 if(movimiento_valido_jug1){
-                                    cout << "hola movimiento jugador 1 completado\n";
+                                    cout << "movimiento jugador 1 completado\n";
                                     tablero[x_inicial][y_inicial] = NULL;
                                     tablero[x_final][y_final] = reina;
                                 }
@@ -203,7 +203,7 @@ int main(){
                                         tablero[x_final][y_final] = peon; 
                                     } else{
                                         //No realizo el comer al paso pero igual se mueve
-                                        cout << "hola movimiento jugador 2 completado\n";
+                                        cout << "movimiento jugador 2 completado\n";
                                         tablero[x_inicial][y_inicial] = NULL;
                                         tablero[x_final][y_final] = peon;
                                     }
@@ -214,7 +214,7 @@ int main(){
                                 Caballo* caballo = dynamic_cast<Caballo*>(tablero[x_inicial][y_inicial]);
                                 movimiento_valido_jug2 = caballo->validar_movimiento('n',x_inicial,y_inicial,x_final,y_final,tablero);
                                 if(movimiento_valido_jug2){
-                                    cout << "hola movimiento jugador 2 completado\n";
+                                    cout << "movimiento jugador 2 completado\n";
                                     tablero[x_inicial][y_inicial] = NULL;
                                     tablero[x_final][y_final] = caballo;
                                 }
@@ -224,7 +224,7 @@ int main(){
                                 Rey* rey = dynamic_cast<Rey*>(tablero[x_inicial][y_inicial]);
                                 movimiento_valido_jug2 = rey->validar_movimiento('k',x_inicial,y_inicial,x_final,y_final,tablero);
                                 if(movimiento_valido_jug2){
-                                    cout << "hola movimiento jugador 2 completado\n";
+                                    cout << "movimiento jugador 2 completado\n";
                                     tablero[x_inicial][y_inicial] = NULL;
                                     tablero[x_final][y_final] = rey;
                                 }
@@ -234,7 +234,7 @@ int main(){
                                 Torre* torre = dynamic_cast<Torre*>(tablero[x_inicial][y_inicial]);
                                 movimiento_valido_jug2 = torre->validar_movimiento('r',x_inicial,y_inicial,x_final,y_final,tablero);
                                 if(movimiento_valido_jug2){
-                                    cout << "hola movimiento jugador 2 completado\n";
+                                    cout << "movimiento jugador 2 completado\n";
                                     tablero[x_inicial][y_inicial] = NULL;
                                     tablero[x_final][y_final] = torre;
                                 }
@@ -244,14 +244,24 @@ int main(){
                                 Alfil* alfil = dynamic_cast<Alfil*>(tablero[x_inicial][y_inicial]);
                                 movimiento_valido_jug2 = alfil->validar_movimiento('b',x_inicial,y_inicial,x_final,y_final,tablero);
                                 if(movimiento_valido_jug2){
-                                    cout << "hola movimiento jugador 2 completado\n";
+                                    cout << "movimiento jugador 2 completado\n";
                                     tablero[x_inicial][y_inicial] = NULL;
                                     tablero[x_final][y_final] = alfil;
                                 }
                                 break;
                             }
+                            case 'q': {
+                                Reina* reina = dynamic_cast<Reina*>(tablero[x_inicial][y_inicial]);
+                                movimiento_valido_jug2 = reina->validar_movimiento('q',x_inicial,y_inicial,x_final,y_final,tablero);
+                                if(movimiento_valido_jug2){
+                                    cout << "movimiento jugador 2 completado\n";
+                                    tablero[x_inicial][y_inicial] = NULL;
+                                    tablero[x_final][y_final] = reina;
+                                }
+                                break;
+                            }
                             default:
-                                //cout << "Movimiento Invalido -- Eligio una pieza que no le corresponde.\n\n";
+                            cout << "Movimiento Invalido -- Eligio una pieza que no le corresponde.\n\n";
                                 movimiento_valido_jug2 = false;
                                 break;
                             }
@@ -458,7 +468,6 @@ bool Coronamiento(int x_final,int y_final, char peon, Pieza*** tablero){
         //Caso Jugador 2
     }
 }
-
 
 void imprimir_tablero_Jugador1(Pieza*** tablero, string nombre_jugador1, string nombre_jugador2){
     cout << "   "<< nombre_jugador2 << endl;

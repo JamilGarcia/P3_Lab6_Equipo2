@@ -139,7 +139,7 @@ bool Torre::validarTorre(char torre, int x_inicial, int y_inicial, int x_final, 
                     contador_piezas_jug1++;
                 }
             }
-         } else {
+        } else {
             //La posicion final mandada no es valida
             cout << "La torre no puede llegar a esa posicion\n\n";
             sub_temporal = false;
