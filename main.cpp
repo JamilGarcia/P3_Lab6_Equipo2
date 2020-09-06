@@ -6,6 +6,7 @@
 #include "Rey.h"
 #include "Torre.h"
 #include "Alfil.h"
+#include "Reina.h"
 using namespace std;
 
 void inicializar_Piezas(Pieza***);
@@ -142,6 +143,16 @@ int main(){
                                     cout << "hola movimiento jugador 1 completado\n";
                                     tablero[x_inicial][y_inicial] = NULL;
                                     tablero[x_final][y_final] = alfil;
+                                }
+                                break;
+                            }
+                            case 'Q': {
+                                Reina* reina = dynamic_cast<Reina*>(tablero[x_inicial][y_inicial]);
+                                movimiento_valido_jug1 = reina->validar_movimiento('Q',x_inicial,y_inicial,x_final,y_final,tablero);
+                                if(movimiento_valido_jug1){
+                                    cout << "hola movimiento jugador 1 completado\n";
+                                    tablero[x_inicial][y_inicial] = NULL;
+                                    tablero[x_final][y_final] = reina;
                                 }
                                 break;
                             }
@@ -282,8 +293,10 @@ int main(){
 
 void inicializar_Piezas(Pieza*** tablero){
     //Inicializar piezas negras
+    //Reina -pieza negra
+    tablero[4][4] = new Reina(4,4,'Q',"blanco");
     //tablero[4][4] = new Alfil(4,4,'B',"bslanco");//Alfil de prueba
-    tablero[3][2] = new Alfil(2,3,'b',"negro");//Alfil de prueba
+    //tablero[3][2] = new Alfil(2,3,'b',"negro");//Alfil de prueba
     //Alfil negros
     //Torres negras
     //tablero[1][4] = new Torre(0,4,'r',"negro");
@@ -307,9 +320,9 @@ void inicializar_Piezas(Pieza*** tablero){
     //tablero[7][1] = new Caballo(7,2,'N',"blanco");
     //tablero[7][6] = new Caballo(7,6,'N',"blanco");
     //Peones blancos
-    for (int i = 0; i < 8; i++){
+    /*for (int i = 0; i < 8; i++){
         tablero[6][i] = new Peon(6,i,'P',"blanco");
-    }
+    }*/
 }
 
 bool enrocarse(int x_in, int y_in, int x_fi, int y_fi, Pieza*** tablero, Torre* torre, int ReyX, int ReyY){
