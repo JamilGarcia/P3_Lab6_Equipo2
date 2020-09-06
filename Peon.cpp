@@ -16,6 +16,7 @@ Peon::~Peon() {}
 
 bool Peon::validar_movimiento(char peon, int x_inicial, int y_inicial, int x_final, int y_final, Pieza ***tablero){
     // TODO: Validar que la posición en la que el usuario dice que está la pieza sea válida
+    bool temp = true;
     char busqueda1;
     //Validar para que el caracter de busqueda no tire nullptrexception
     if(tablero[x_inicial][y_inicial] == NULL){
@@ -36,18 +37,24 @@ bool Peon::validar_movimiento(char peon, int x_inicial, int y_inicial, int x_fin
             if (peon == 'P'){
                 // Turno del jugador 1
                 if (x_inicial - 1 == x_final){
-                    return true;
+                    temp = true;
                 } else if(x_inicial ==  6 && (x_inicial - 2 == x_final )) {
                     //Caso de Primer Movimiento Para 2 espacios adelante 
-                    return true;
+                    temp =true;
+                } else {
+                    temp = false;
                 }
             }else{
                 // Turno del jugador 2
                 if (x_inicial + 1 == x_final){
-                    return true;
+                    temp = true;
+                    //return true;
                 } else if(x_inicial == 1 && (x_inicial + 2 == x_final)){
                     //Caso de Primer Movimiento Para 2 espacios adelante 
-                    return true;
+                    temp = true;
+                    //return true;
+                } else {
+                    temp = false;
                 }
             }
         } else{
@@ -58,20 +65,23 @@ bool Peon::validar_movimiento(char peon, int x_inicial, int y_inicial, int x_fin
                     if (x_inicial - 1 == x_final && (y_inicial - 1 == y_final || y_inicial + 1 == y_final)){
                         // TODO: Comer
                         cout << "El peon se comio a otro\n\n"; 
-                        return true;
+                        temp = true;
+                        //return true;
                     }
                 }else{
                     cout << "El peón no puede moverse a esa posición porque hay una pieza de su mismo color (negro)." << endl;
+                    temp = false;
                 }
             }else{
                 if (peon == 'P'){
                     cout << "El peón no puede moverse a esa posición porque hay una pieza de su mismo color (blanco)." << endl;
+                    temp = false;
                 }else{
                     // Turno del jugador 2
                     if (x_inicial + 1 == x_final && (y_inicial - 1 == y_final || y_inicial + 1 == y_final)){
                         // TODO: Comer
                         cout << "El peon se comio a otro\n\n";
-                        return true;
+                        temp = false;
                     }
                 }
             }
@@ -84,6 +94,8 @@ bool Peon::validar_movimiento(char peon, int x_inicial, int y_inicial, int x_fin
         }else{
             cout << "En esa posición no hay un peón, hay un: " << busqueda1 << "." << endl;
         }
-        return false;
+        temp = false;
+        //return false;
     }
+    return temp;
 }

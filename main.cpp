@@ -293,36 +293,41 @@ int main(){
 
 void inicializar_Piezas(Pieza*** tablero){
     //Inicializar piezas negras
-    //Reina -pieza negra
-    tablero[4][4] = new Reina(4,4,'Q',"blanco");
-    //tablero[4][4] = new Alfil(4,4,'B',"bslanco");//Alfil de prueba
-    //tablero[3][2] = new Alfil(2,3,'b',"negro");//Alfil de prueba
-    //Alfil negros
-    //Torres negras
-    //tablero[1][4] = new Torre(0,4,'r',"negro");
-    //tablero[0][7] = new Torre(0,7,'r',"negro");
-    //Rey negro
-    //tablero[0][4] = new Rey(0,4,'k',"negro"); 
-    //Caballos negros
-    //tablero[0][4] = new Caballo(0,1,'n',"negro");
-    //tablero[0][6] = new Caballo(0,1,'n',"negro");
+    //Torres
+    tablero[0][0] = new Torre(0,0,'r',"negro");
+    tablero[0][7] = new Torre(0,7,'r',"negro");
+    //Caballos
+    tablero[0][1] = new Caballo(0,1,'n',"negro");
+    tablero[0][6] = new Caballo(0,6,'n',"negro");
+    //Alfiles
+    tablero[0][2] = new Alfil(0,2,'b',"negro");
+    tablero[0][5] = new Alfil(0,5,'b',"negro");
+    //Reina
+    tablero[0][3] = new Reina(0,3,'q',"negro");
+    //Rey
+    tablero[0][4] = new Rey(0,4,'k',"negro");
     //Peones negros
-    /*for (int i = 0; i < 8; i++){
+    for (int i = 0; i < 8; i++){
         tablero[1][i] = new Peon(1, i, 'p',"negro");
-    }*/
+    }
     //Inicializar piezas blancas
-    //Torres blancas
-    //tablero[4][4] = new Torre(4,4,'R',"blanco");
-    //tablero[7][7] = new Torre(7,7,'R',"blanco");
-    //Rey blanco
-    //tablero[7][4] = new Rey(0,4,'K',"blanco"); 
-    //Caballos blancos
-    //tablero[7][1] = new Caballo(7,2,'N',"blanco");
-    //tablero[7][6] = new Caballo(7,6,'N',"blanco");
-    //Peones blancos
-    /*for (int i = 0; i < 8; i++){
+    //Torres
+    tablero[7][0] = new Torre(7,0,'R',"blanco");
+    tablero[7][7] = new Torre(7,7,'R',"blanco");
+    //Caballos
+    tablero[7][1] = new Caballo(7,1,'N',"blanco");
+    tablero[7][6] = new Caballo(7,6,'N',"blanco");
+    //Alfiles
+    tablero[7][2] = new Alfil(7,2,'B',"blanco");
+    tablero[7][5] = new Alfil(7,5,'B',"blanco");
+    //Reina
+    tablero[7][3] = new Reina(7,3,'Q',"blanco");
+    //Rey
+    tablero[7][4] = new Rey(0,4,'K',"blanco");
+    //Peones
+    for (int i = 0; i < 8; i++){
         tablero[6][i] = new Peon(6,i,'P',"blanco");
-    }*/
+    }
 }
 
 bool enrocarse(int x_in, int y_in, int x_fi, int y_fi, Pieza*** tablero, Torre* torre, int ReyX, int ReyY){
