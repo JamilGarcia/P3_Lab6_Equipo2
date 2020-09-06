@@ -34,7 +34,6 @@ bool Alfil::validar_movimiento(char alfil, int x_inicial, int y_inicial, int x_f
         } else {
             busqueda2 = tablero[x_final][y_final]->getCaracter(); 
         }
-
         if(busqueda2 == ' '){
             //Validar si se puede mover al espacio vacio
             if(alfil == 'B'){
@@ -45,7 +44,31 @@ bool Alfil::validar_movimiento(char alfil, int x_inicial, int y_inicial, int x_f
                 temp = validarAlfil('b',x_inicial,y_inicial,x_final,y_final,tablero);
             }
         } else {
-            //Caso cuando hay una pieza opuesta
+            //Caso cuando hay una pieza a comer
+            if(tablero[x_final][y_final]->getColor() == "negro"){
+                if(alfil == 'B'){
+                    //Turno Jugador 1
+                    temp = validarAlfil('B',x_inicial,y_inicial,x_final,y_final,tablero);
+                    if(temp) 
+                        cout << "Se comio la pieza del contrincante";
+                } else {
+                    //Turno de Jugador 2
+                    cout << "El alfil no puede moverse a esa posición porque hay una pieza de su mismo color (negro)." << endl;
+                    temp = false;
+                }
+            } else {
+                //Caso para piezas blancas
+                if(alfil == 'B'){
+                    //Caso Jugador 1
+                    cout << "El alfil no puede moverse a esa posición porque hay una pieza de su mismo color (blanco)." << endl;
+                    temp = false;
+                } else {
+                    //Caso Jugador 2
+                    temp = validarAlfil('b',x_inicial,y_inicial,x_final,y_final,tablero);
+                    if(temp) 
+                        cout << "Se comio la pieza del contrincante";
+                }
+            }
         }
 
     }else {
@@ -68,7 +91,6 @@ bool Alfil::validarAlfil(char alfil, int x_inicial, int y_inicial, int x_final, 
         int contador_piezas_jug1 = 0;
         string direccion_alfil = " ";
         //Determinar Direccion de Alfil
-
         //Esquina Derecha(Arriba y Derecha)
         if(x_final < x_inicial && y_final > y_inicial){
             direccion_alfil = "derecha_superior";
@@ -77,10 +99,10 @@ bool Alfil::validarAlfil(char alfil, int x_inicial, int y_inicial, int x_final, 
             direccion_alfil = "derecha_inferior";
         } else if(x_final > x_inicial && y_final < y_inicial){
             //Esquina Izquierda Inferior
-            direccion_alfil = "izquiera_inferior";
+            direccion_alfil = "izquierda_inferior";
         } else if(x_final < x_inicial && y_final < y_inicial){
             //Esquina Izquierda Inferior
-            direccion_alfil = "izquiera_superior";
+            direccion_alfil = "izquierda_superior";
         } else {
             //Posicionamiento Invalida
             direccion_alfil = "invalida";
@@ -115,7 +137,7 @@ bool Alfil::validarAlfil(char alfil, int x_inicial, int y_inicial, int x_final, 
                     }   
                 }
             }
-        } else if(direccion_alfil == "izquiera_inferior"){
+        } else if(direccion_alfil == "izquierda_inferior"){
             //Esquina Izquierda Inferior
             int contador_izq_inferior = 1;
             for ( int i = x_inicial +1; i < x_final; i++){
@@ -130,7 +152,7 @@ bool Alfil::validarAlfil(char alfil, int x_inicial, int y_inicial, int x_final, 
                     }   
                 }
             }
-        } else if(direccion_alfil =="izquiera_superior" ){
+        } else if(direccion_alfil =="izquierda_superior" ){
             //Esquina Izquierda Superior
             int contador_izq_superior = 1;
             for ( int i = x_inicial  - 1; i > x_final; i--){
@@ -173,29 +195,29 @@ bool Alfil::validarAlfil(char alfil, int x_inicial, int y_inicial, int x_final, 
             direccion_alfil = "derecha_superior";
         } else if(x_final < x_inicial && y_final > y_inicial){
             //Esquina Derecha inferior
-            direccion_alfil = "derecha_inferior\n";
+            direccion_alfil = "derecha_inferior";
         } else if(x_final < x_inicial && y_final < y_inicial){
             //Esquina Izquierda Inferior
-            direccion_alfil = "izquiera_inferior";
+            direccion_alfil = "izquierda_inferior";
         } else if(x_final > x_inicial && y_final < y_inicial){
             //Esquina Izquierda Superior
-            direccion_alfil = "izquiera_superior";
+            direccion_alfil = "izquierda_superior";
         } else {
             //Posicionamiento Invalida
             direccion_alfil = "invalida";
         }
 
         //Dependiendo de la direccion buscar en diagonal
-        /*if(direccion_alfil == "derecha_superior"){
+        if(direccion_alfil == "derecha_superior"){
             //Esquina Derecha Superior
             int contador_derecha_sup= 1;
-            for ( int i = x_inicial -1; i > x_final; i--){
+            for ( int i = x_inicial + 1; i < x_final; i++){
                 for ( int j = y_inicial + 1;j < y_final ; j++){
-                    if(j == y_inicial + contador_derecha_sup && i == x_inicial - contador_derecha_sup){
+                    if(j == y_inicial + contador_derecha_sup && i == x_inicial + contador_derecha_sup){
                         contador_derecha_sup++;
                         //Busca en el camino antes de la posicion final
                         if(tablero[i][j] != NULL){
-                            contador_piezas_jug1++;
+                            contador_piezas_jug2++;
                         }
                     }   
                 }
@@ -203,43 +225,44 @@ bool Alfil::validarAlfil(char alfil, int x_inicial, int y_inicial, int x_final, 
         } else if(direccion_alfil == "derecha_inferior"){
             //Esquina Derecha Inferior
             int contador_derecha_inf = 1;
-            for ( int i = x_inicial +1; i < x_final; i++){
+            for ( int i = x_inicial - 1; i > x_final; i--){
                 for ( int j = y_inicial + 1;j < y_final ; j++){
-                    if(j == y_inicial + contador_derecha_inf && i == x_inicial + contador_derecha_inf){
+                    if(j == y_inicial + contador_derecha_inf && i == x_inicial - contador_derecha_inf){
                         contador_derecha_inf++;
+                        //cout << "[" << i << "," << j << "]" << endl;
                         //Busca en el camino antes de la posicion final
                         if(tablero[i][j] != NULL){
-                            contador_piezas_jug1++;
+                            contador_piezas_jug2++;
                         }
                     }   
                 }
             }
-        } else if(direccion_alfil == "izquiera_inferior"){
+        } else if(direccion_alfil == "izquierda_inferior"){
             //Esquina Izquierda Inferior
             int contador_izq_inferior = 1;
-            for ( int i = x_inicial +1; i < x_final; i++){
+            for ( int i = x_inicial + - 1; i > x_final; i--){
                 for ( int j = y_inicial - 1;j > y_final ; j--){
-                    if(j == y_inicial - contador_izq_inferior && i == x_inicial + contador_izq_inferior){
+                    if(j == y_inicial - contador_izq_inferior && i == x_inicial - contador_izq_inferior){
                         //cout << "[" << i << "," << j << "]" << endl;
                         contador_izq_inferior++;
                         //Busca en el camino antes de la posicion final
                         if(tablero[i][j] != NULL){
-                            contador_piezas_jug1++;
+                            contador_piezas_jug2++;
                         }
                     }   
                 }
             }
-        } else if(direccion_alfil =="izquiera_superior" ){
+        } else if(direccion_alfil =="izquierda_superior" ){
             //Esquina Izquierda Superior
             int contador_izq_superior = 1;
-            for ( int i = x_inicial  - 1; i > x_final; i--){
+            for ( int i = x_inicial  + 1; i < x_final; i++){
                 for ( int j = y_inicial - 1;j > y_final ; j--){
-                    if(j == y_inicial - contador_izq_superior && i == x_inicial - contador_izq_superior){
-                        cout << "[" << i << "," << j << "]" << endl;
+                    if(j == y_inicial - contador_izq_superior && i == x_inicial + contador_izq_superior){
+                        //cout << "[" << i << "," << j << "]" << endl;
                         contador_izq_superior++;
                         //Busca en el camino antes de la posicion final
                         if(tablero[i][j] != NULL){
-                            contador_piezas_jug1++;
+                            contador_piezas_jug2++;
                         }
                     }   
                 }
@@ -248,9 +271,9 @@ bool Alfil::validarAlfil(char alfil, int x_inicial, int y_inicial, int x_final, 
             //Posicion Final Invalida
             cout << "La torre no puede llegar a esa posicion\n\n";
             sub_temporal = false;
-            contador_piezas_jug1 = 1;
+            contador_piezas_jug2 = 1;
         }
-        */
+
         if(contador_piezas_jug2 == 0){
             //Puede avanzar porque no hay piezas en el camino
             sub_temporal = true;
