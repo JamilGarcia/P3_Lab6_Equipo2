@@ -82,11 +82,11 @@ int main(){
                                 Peon* peon = dynamic_cast<Peon*>(tablero[x_inicial][y_inicial]);
                                 movimiento_valido_jug1 = peon->validar_movimiento('P',x_inicial,y_inicial,x_final,y_final,tablero);
                                 if(movimiento_valido_jug1){
-                                    if(Coronamiento(y_final, 'P')){
+                                    /*if(Coronamiento(y_final, 'P')){
                                         Reina* PeonCoronado = new Reina(); //Parametros de Reina
                                         tablero[x_inicial][y_inicial] = NULL;
                                         tablero[x_final][y_final] = PeonCoronado;
-                                    }
+                                    }*/
                                     cout << "hola movimiento jugador 1 completado\n";
                                     tablero[x_inicial][y_inicial] = NULL;
                                     tablero[x_final][y_final] = peon;
@@ -116,7 +116,7 @@ int main(){
                             case 'R': {
                                 Torre* torre = dynamic_cast<Torre*>(tablero[x_inicial][y_inicial]);
                                 movimiento_valido_jug1 = torre->validar_movimiento('R',x_inicial,y_inicial,x_final,y_final,tablero);
-                                 if(enrocarse(x_inicial, y_inicial, x_final, y_final, tablero, torre, 4, 7)){
+                                /*if(enrocarse(x_inicial, y_inicial, x_final, y_final, tablero, torre, 4, 7)){
                                     Rey* rey = dynamic_cast<Rey*>(tablero[x_final][y_final]);
                                     tablero[x_inicial][y_inicial] = NULL;
                                     tablero[x_final-1][y_final] = torre;
@@ -126,7 +126,7 @@ int main(){
                                     } else {
                                         tablero[x_final + 2][y_final] = rey;
                                     }
-                                }
+                                }*/
                                 if(movimiento_valido_jug1){
                                     cout << "hola movimiento jugador 1 completado\n";
                                     tablero[x_inicial][y_inicial] = NULL;
@@ -173,11 +173,11 @@ int main(){
                                 Peon* peon = dynamic_cast<Peon*>(tablero[x_inicial][y_inicial]);
                                 movimiento_valido_jug2 = peon->validar_movimiento('p',x_inicial,y_inicial,x_final,y_final,tablero);
                                 if(movimiento_valido_jug2){
-                                    if(Coronamiento(y_final, 'P')){
+                                    /*if(Coronamiento(y_final, 'P')){
                                         Reina* PeonCoronado = new Reina(); //Parametros de Reina
                                         tablero[x_inicial][y_inicial] = NULL;
                                         tablero[x_final][y_final] = PeonCoronado;
-                                    }
+                                    }*/
                                     cout << "hola movimiento jugador 2 completado\n";
                                     tablero[x_inicial][y_inicial] = NULL;
                                     tablero[x_final][y_final] = peon;
@@ -207,7 +207,7 @@ int main(){
                             case 'r': {
                                 Torre* torre = dynamic_cast<Torre*>(tablero[x_inicial][y_inicial]);
                                 movimiento_valido_jug2 = torre->validar_movimiento('r',x_inicial,y_inicial,x_final,y_final,tablero);
-                                 if(enrocarse(x_inicial, y_inicial, x_final, y_final, tablero, torre, 4, 7)){
+                                /*if(enrocarse(x_inicial, y_inicial, x_final, y_final, tablero, torre, 4, 7)){
                                     Rey* rey = dynamic_cast<Rey*>(tablero[x_final][y_final]);
                                     tablero[x_inicial][y_inicial] = NULL;
                                     tablero[x_final-1][y_final] = torre;
@@ -217,7 +217,7 @@ int main(){
                                     } else {
                                         tablero[x_final + 2][y_final] = rey;
                                     }
-                                }
+                                }*/
                                 if(movimiento_valido_jug2){
                                     cout << "hola movimiento jugador 2 completado\n";
                                     tablero[x_inicial][y_inicial] = NULL;
