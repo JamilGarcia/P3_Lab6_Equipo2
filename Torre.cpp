@@ -55,12 +55,14 @@ bool Torre::validar_movimiento(char torre, int x_inicial, int y_inicial, int x_f
                 }else {
                     //Caso Jugador 2
                     cout << "hola-La torre no puede moverse a esa posición porque hay una pieza de su mismo color (negro)." << endl;
+                    temp = false;
                 }
             } else {
                 //turno de Jugador 2
                 if(torre == 'R'){
                     //Caso Jugador 1
                     cout << "La torre no puede moverse a esa posición porque hay una pieza de su mismo color (blanco)." << endl;
+                    temp = false;
                 } else {
                     //Caso Jugador 2
                     temp = validarTorre(torre,x_inicial, y_inicial,x_final,y_final,tablero);

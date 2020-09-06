@@ -5,6 +5,7 @@
 #include "Caballo.h"
 #include "Rey.h"
 #include "Torre.h"
+#include "Alfil.h"
 using namespace std;
 
 void inicializar_Piezas(Pieza***);
