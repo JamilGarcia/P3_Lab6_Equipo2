@@ -1,242 +1,208 @@
 #include <iostream>
 #include <string>
-#include "Pieza.hpp"
-#include "Caballo.hpp"
-#include "Torre.hpp"
-#include "Alfil.hpp"
-#include "Peon.hpp"
-#include "Reina.hpp"
-#include "Rey.hpp"
-
+#include "Pieza.h"
+#include "Peon.h"
+#include "Caballo.h"
+#include "Rey.h"
+#include "Torre.h"
 using namespace std;
 
-Pieza*** inicializar_Piezas(Pieza ***);
-void imprimir_Tablero_Jugador1(Pieza ***, string, string);
-void imprimir_Tablero_Jugador2(Pieza ***, string,string);
-int conseguir_posicionX(string,bool);
-int conseguir_posicionY(string,bool);
-
+void inicializar_Piezas(Pieza***);
+void imprimir_tablero_Jugador1(Pieza***,string,string);
+void imprimir_tablero_Jugador2(Pieza***,string,string);
+int conseguir_posicionX(char,bool);
+int conseguir_posicionY(char,bool);
 
 int main(){
-    string nombre_jugador1;
-    string nombre_jugador2;
-    cout << "Jugar Ajedrez" << endl;
-
+    string nombre_jugador1, nombre_jugador2;
+    int opcion_usuario;
     char seguir = 's';
-    while (seguir == 's'){
-        cout << "Opciones de Ajedrez" << endl
+    cout << "\nJuego de Ajedrez\n\n";
+    while(seguir == 's'){
+        cout << "Menu" << endl
              << "[1] Jugar" << endl
              << "[2] Salir" << endl
              << "Seleccione una opcion: ";
-        int opcion_usuario;
         cin >> opcion_usuario;
         cout << endl;
         switch (opcion_usuario){
         case 1:{
             //Jugar
-            cout << "Ingrese nombre del jugador 1: ";
+            cout << "Nombre Jugador1: ";
             cin >> nombre_jugador1;
             cout << endl;
-            cout << "Ingrese nombre del jugador 2: ";
+            cout << "Nombre Jugador2: ";
             cin >> nombre_jugador2;
             cout << endl;
-
-            Pieza ***tablero;
-            tablero = new Pieza **[8];
+            //Crear Tablero
+            Pieza ***tablero = new Pieza **[8];
             for (int i = 0; i < 8; i++){
                 tablero[i] = new Pieza *[8];
                 for (int j = 0; j < 8; j++){
                     tablero[i][j] = NULL;
                 }
             }
-            tablero = inicializar_Piezas(tablero);
-            //Determinar Turno
+            //Inicializar Tablero
+            inicializar_Piezas(tablero);
+            //Determinar Juego
             int turno = 1;
-            string movimiento;
-            string movimiento_jugador2;
+            string movimiento_jug1, movimiento_jug2;
             bool terminar_partida = true;
-            bool resultado_movimiento_player1 = true;
-            bool resultado_movimiento_player2 = true;
-            while(terminar_partida == true){
+            while(terminar_partida){
                 if(turno % 2 != 0){
-                    while(resultado_movimiento_player1 == true){
-                        resultado_movimiento_player1 = true;
-                        //Turno de Jugador 1
-                        cout << "Turno Jugador 1" << endl;
-                        imprimir_Tablero_Jugador1(tablero, nombre_jugador1, nombre_jugador2);
+                    bool movimiento_valido_jug1 = false;
+                    while(!movimiento_valido_jug1){
+                        //Turno Jugador 1
+                        cout << "Turno Jugador 1\n\n"; 
+                        //Imprimir Tablero en perspectiva del Jugador 1
+                        imprimir_tablero_Jugador1(tablero,nombre_jugador1,nombre_jugador2);
                         cout << "Ingrese: ";
-                        cin >> movimiento;
+                        cin >> movimiento_jug1;
 
-                        if(movimiento == "bai"){
+                        //Fin de Juego por medio de abandonar la partida
+                        if(movimiento_jug1 == "bai"){
                             terminar_partida = false;
-                            resultado_movimiento_player2 = false;
+                            movimiento_valido_jug1 = true;
                             cout << "*Partida finalizada, " << nombre_jugador1 <<" abandonó*\n" << endl;
                         } else {
-                            int posicion_x_1, posicion_y_1, posicion_x_2,posicion_y_2;
-                            string coordenada_inicial = movimiento.substr(2,3);
-                            string coordenada_movimiento = movimiento.substr(5,6);
-                            coordenada_inicial = coordenada_inicial.substr(0,2);
-                            posicion_y_1 = conseguir_posicionY(coordenada_inicial, false);//Conseguimos coordenada y inicial de la pieza
-                            posicion_x_1 = conseguir_posicionX(coordenada_inicial, false);//Conseguimos coordenada x inicial de la pieza
-                            //Coordenadas de posicion a intentar mover
-                            posicion_x_2 = conseguir_posicionX(coordenada_movimiento, false);
-                            posicion_y_2 = conseguir_posicionY(coordenada_movimiento, false);
-                            //Llamar a metodo validar_movimiento
-                            char pieza = movimiento[0];
-                            switch(pieza){
-                                case 'P':{
-                                    Peon* peon = dynamic_cast<Peon*>(tablero[posicion_x_1][posicion_y_1]);
-                                    resultado_movimiento_player1 = peon->validar_movimiento(posicion_x_1, posicion_y_1,posicion_x_2,posicion_y_2, tablero);
-                                    if(resultado_movimiento_player1 == false){
-                                        tablero[posicion_x_1][posicion_y_1] = NULL;
-                                        tablero[posicion_x_2][posicion_y_2] = new Peon(posicion_x_2,posicion_y_2, 'P', "blanco");
-                                    } else 
-                                        cout << "Movimiento Invalido\n\n";
-                                    break;
+                            string coordenada_inicial = movimiento_jug1.substr(2,2);
+                            string coordenada_final = movimiento_jug1.substr(5);
+                            int x_inicial, y_inicial, x_final, y_final;
+
+                            x_inicial = conseguir_posicionX(coordenada_inicial[1],true);
+                            y_inicial = conseguir_posicionY(coordenada_inicial[0],true);
+                            x_final = conseguir_posicionX(coordenada_final[1], true);
+                            y_final = conseguir_posicionY(coordenada_final[0], true);
+
+                            char pieza = movimiento_jug1[0];
+                            switch (pieza){
+                            case 'P': {
+                                Peon* peon = dynamic_cast<Peon*>(tablero[x_inicial][y_inicial]);
+                                movimiento_valido_jug1 = peon->validar_movimiento('P',x_inicial,y_inicial,x_final,y_final,tablero);
+                                if(movimiento_valido_jug1){
+                                    cout << "hola movimiento jugador 1 completado\n";
+                                    tablero[x_inicial][y_inicial] = NULL;
+                                    tablero[x_final][y_final] = peon;
                                 }
-                                case 'N':
-                                    Caballo* caballo = dynamic_cast<Caballo*> (tablero[posicion_x_1][posicion_y_1]);
-                                    resultado_movimiento_player1 = caballo->validar_movimiento(posicion_x_2,posicion_y_2);
-                                    if(resultado_movimiento_player1 == false){
-                                        tablero[posicion_x_1][posicion_y_1] = NULL;
-                                        tablero[posicion_x_2][posicion_y_2] = new Caballo(posicion_x_2,posicion_y_2, 'N', "blanco");
-                                    } else 
-                                        cout << "Movimiento Invalido\n\n";
                                 break;
-                                case 'B':
-                                    Alfil* alfil = dynamic_cast<Alfil*> (tablero[posicion_x_1][posicion_y_1]);
-                                    resultado_movimiento_player1 = alfil->validar_movimiento(posicion_x_2,posicion_y_2);
-                                    if(resultado_movimiento_player1 == false){
-                                        tablero[posicion_x_1][posicion_y_1] = NULL;
-                                        tablero[posicion_x_2][posicion_y_2] = new Alfil(posicion_x_2,posicion_y_2, 'B', "blanco");
-                                    } else 
-                                        cout << "Movimiento Invalido\n\n";
-                                    break;
-                                case 'R':
-                                    Torre* torre = dynamic_cast<Torre*> (tablero[posicion_x_1][posicion_y_1]);
-                                    resultado_movimiento_player1 = torre->validar_movimiento(posicion_x_2,posicion_y_2);
-                                    if(resultado_movimiento_player1 == false){
-                                        tablero[posicion_x_1][posicion_y_1] = NULL;
-                                        tablero[posicion_x_2][posicion_y_2] = new Torre(posicion_x_2,posicion_y_2, 'R', "blanco");
-                                    } else 
-                                        cout << "Movimiento Invalido\n\n";
-                                    break;
-                                case 'Q':
-                                    Reina* reina = dynamic_cast<Reina*> (tablero[posicion_x_1][posicion_y_1]);
-                                    resultado_movimiento_player1 = reina->validar_movimiento(posicion_x_2,posicion_y_2);
-                                    if(resultado_movimiento_player1 == false){
-                                        tablero[posicion_x_1][posicion_y_1] = NULL;
-                                        tablero[posicion_x_2][posicion_y_2] = new Reina(posicion_x_2,posicion_y_2, 'Q', "blanco");
-                                    } else 
-                                        cout << "Movimiento Invalido\n\n";
-                                    break;
-                                case 'K':
-                                    Rey* rey = dynamic_cast<Rey*> (tablero[posicion_x_1][posicion_y_1]);
-                                    resultado_movimiento_player1 = rey->validar_movimiento(posicion_x_2,posicion_y_2);
-                                    if(resultado_movimiento_player1 == false){
-                                        tablero[posicion_x_1][posicion_y_1] = NULL;
-                                        tablero[posicion_x_2][posicion_y_2] = new Rey(posicion_x_2,posicion_y_2, 'K', "blanco");
-                                    } else 
-                                        cout << "Movimiento Invalido\n\n";
-                                    break;
-                                default:
-                                    cout << "Movimiento Invalido" << endl;
+                            }
+                            case 'N': {
+                                Caballo* caballo = dynamic_cast<Caballo*>(tablero[x_inicial][y_inicial]);
+                                movimiento_valido_jug1 = caballo->validar_movimiento('N',x_inicial,y_inicial,x_final,y_final,tablero);
+                                if(movimiento_valido_jug1){
+                                    cout << "hola movimiento jugador 1 completado\n";
+                                    tablero[x_inicial][y_inicial] = NULL;
+                                    tablero[x_final][y_final] = caballo;
+                                }
+                                break;
+                            }
+                            case 'K': {
+                                Rey* rey = dynamic_cast<Rey*>(tablero[x_inicial][y_inicial]);
+                                movimiento_valido_jug1 = rey->validar_movimiento('K',x_inicial,y_inicial,x_final,y_final,tablero);
+                                if(movimiento_valido_jug1){
+                                    cout << "hola movimiento jugador 1 completado\n";
+                                    tablero[x_inicial][y_inicial] = NULL;
+                                    tablero[x_final][y_final] = rey;
+                                }
+                                break;
+                            }
+                            case 'R': {
+                                Torre* torre = dynamic_cast<Torre*>(tablero[x_inicial][y_inicial]);
+                                movimiento_valido_jug1 = torre->validar_movimiento('R',x_inicial,y_inicial,x_final,y_final,tablero);
+                                if(movimiento_valido_jug1){
+                                    cout << "hola movimiento jugador 1 completado\n";
+                                    tablero[x_inicial][y_inicial] = NULL;
+                                    tablero[x_final][y_final] = torre;
+                                }
+                                break;
+                            }
+                            default:
+                                cout << "Movimiento Invalido -- Eligio una pieza que no le corresponde.\n\n";
+                                movimiento_valido_jug1 = false;
+                                break;
                             }
                         }
                     }
-                    movimiento = ""; 
-                    cout << endl;
                     turno++;
+                    cout << endl;
                 } else {
-                    //Turno de Jugador 2
-                    while(resultado_movimiento_player2 == true){
-                        resultado_movimiento_player2= true;
-                        cout << "Turno Jugador 2" << endl;
-                        imprimir_Tablero_Jugador2(tablero, nombre_jugador1, nombre_jugador2);
+                    //Turno Jugador 2
+                    bool movimiento_valido_jug2 = false;
+                    while(!movimiento_valido_jug2){
+                        cout << "Turno Jugador 2\n\n";
+                        //Imprimir Tablero en perspectiva del Jugador 2
+                        imprimir_tablero_Jugador2(tablero,nombre_jugador1,nombre_jugador2);
                         cout << "Ingrese: ";
-                        cin >> movimiento_jugador2;
-                        if(movimiento == "bai"){
+                        cin >> movimiento_jug2;
+                        //Fin de Juego por medio de abandonar la partida
+                        if(movimiento_jug2 == "bai"){
                             terminar_partida = false;
-                            resultado_movimiento_player2 = false;
+                            movimiento_valido_jug2 = true;
                             cout << "*Partida finalizada, " << nombre_jugador2 <<" abandonó*\n" << endl;
                         } else {
-                            int posicion_x_1, posicion_y_1, posicion_x_2,posicion_y_2;
-                            string coordenada_inicial = movimiento_jugador2.substr(2,3);
-                            string coordenada_movimiento = movimiento_jugador2.substr(5,6);
-                            coordenada_inicial = coordenada_inicial.substr(0,2);
-                            posicion_y_1 = conseguir_posicionY(coordenada_inicial, true);//Conseguimos coordenada y inicial de la pieza
-                            posicion_x_1 = conseguir_posicionX(coordenada_inicial, true);//Conseguimos coordenada x inicial de la pieza
-                            //Coordenadas de posicion a intentar mover
-                            posicion_x_2 = conseguir_posicionX(coordenada_movimiento, true);
-                            posicion_y_2 = conseguir_posicionY(coordenada_movimiento, true);
-                            //Llamar a metodo validar_movimiento
-                            char pieza = movimiento_jugador2[0];
-                            switch(pieza){
-                                case 'p':{
-                                    Peon* peon = dynamic_cast<Peon*>(tablero[posicion_x_1][posicion_y_1]);
-                                    resultado_movimiento_player2 = peon->validar_movimiento(posicion_x_1, posicion_y_1,posicion_x_2,posicion_y_2, tablero);
-                                    if(resultado_movimiento_player2 == false){
-                                        tablero[posicion_x_1][posicion_y_1] = NULL;
-                                        tablero[posicion_x_2][posicion_y_2] = new Peon(posicion_x_2,posicion_y_2, 'p', "negro");
-                                    } else 
-                                        cout << "Movimiento Invalido\n\n";
-                                    break;
+                            string coordenada_inicial = movimiento_jug2.substr(2,2);
+                            string coordenada_final = movimiento_jug2.substr(5);
+                            int x_inicial, y_inicial, x_final, y_final;
+
+                            x_inicial = conseguir_posicionX(coordenada_inicial[1],true);
+                            y_inicial = conseguir_posicionY(coordenada_inicial[0],true);
+                            x_final = conseguir_posicionX(coordenada_final[1], true);
+                            y_final = conseguir_posicionY(coordenada_final[0], true);
+
+                            char pieza_jug2 = movimiento_jug2[0];
+                            switch (pieza_jug2){
+                            case 'p':{
+                                Peon* peon = dynamic_cast<Peon*>(tablero[x_inicial][y_inicial]);
+                                movimiento_valido_jug2 = peon->validar_movimiento('p',x_inicial,y_inicial,x_final,y_final,tablero);
+                                if(movimiento_valido_jug2){
+                                    cout << "hola movimiento jugador 2 completado\n";
+                                    tablero[x_inicial][y_inicial] = NULL;
+                                    tablero[x_final][y_final] = peon;
                                 }
-                                case 'n':
-                                Caballo* caballo = dynamic_cast<Caballo*> (tablero[posicion_x_1][posicion_y_1]);
-                                    resultado_movimiento_player2 = caballo->validar_movimiento(posicion_x_2,posicion_y_2);
-                                    if(resultado_movimiento_player2 == false){
-                                        tablero[posicion_x_1][posicion_y_1] = NULL;
-                                        tablero[posicion_x_2][posicion_y_2] = new Caballo(posicion_x_2,posicion_y_2, 'n', "negro");
-                                    } else 
-                                        cout << "Movimiento Invalido\n\n";
-                                    break;
-                                case 'b':
-                                    Alfil* alfil = dynamic_cast<Alfil*> (tablero[posicion_x_1][posicion_y_1]);
-                                    resultado_movimiento_player2 = alfil->validar_movimiento(posicion_x_2,posicion_y_2);
-                                    if(resultado_movimiento_player2 == false){
-                                        tablero[posicion_x_1][posicion_y_1] = NULL;
-                                        tablero[posicion_x_2][posicion_y_2] = new Alfil(posicion_x_2,posicion_y_2, 'b', "negro");
-                                    } else 
-                                        cout << "Movimiento Invalido\n\n";
-                                    break;
-                                case 'r':
-                                Torre* torre = dynamic_cast<Torre*> (tablero[posicion_x_1][posicion_y_1]);
-                                    resultado_movimiento_player2 = torre->validar_movimiento(posicion_x_2,posicion_y_2);
-                                    if(resultado_movimiento_player2 == false){
-                                        tablero[posicion_x_1][posicion_y_1] = NULL;
-                                        tablero[posicion_x_2][posicion_y_2] = new Torre(posicion_x_2,posicion_y_2, 'r', "negro");
-                                    } else 
-                                        cout << "Movimiento Invalido\n\n";
-                                    break;
-                                case 'q':
-                                Reina* reina = dynamic_cast<Reina*> (tablero[posicion_x_1][posicion_y_1]);
-                                    resultado_movimiento_player2 = reina->validar_movimiento(posicion_x_2,posicion_y_2);
-                                    if(resultado_movimiento_player2 == false){
-                                        tablero[posicion_x_1][posicion_y_1] = NULL;
-                                        tablero[posicion_x_2][posicion_y_2] = new Reina(posicion_x_2,posicion_y_2, 'q', "negro");
-                                    } else 
-                                        cout << "Movimiento Invalido\n\n";
-                                    break;
-                                case 'k':
-                                Rey* rey = dynamic_cast<Rey*> (tablero[posicion_x_1][posicion_y_1]);
-                                    resultado_movimiento_player2 = rey->validar_movimiento(posicion_x_2,posicion_y_2);
-                                    if(resultado_movimiento_player2 == false){
-                                        tablero[posicion_x_1][posicion_y_1] = NULL;
-                                        tablero[posicion_x_2][posicion_y_2] = new Rey(posicion_x_2,posicion_y_2, 'k', "negro");
-                                    } else 
-                                        cout << "Movimiento Invalido\n\n";
-                                    break;
-                                default:
-                                    cout << "Movimiento Invalido" << endl;
+                            break;
+                            }
+                            case 'n': {
+                                Caballo* caballo = dynamic_cast<Caballo*>(tablero[x_inicial][y_inicial]);
+                                movimiento_valido_jug2 = caballo->validar_movimiento('n',x_inicial,y_inicial,x_final,y_final,tablero);
+                                if(movimiento_valido_jug2){
+                                    cout << "hola movimiento jugador 2 completado\n";
+                                    tablero[x_inicial][y_inicial] = NULL;
+                                    tablero[x_final][y_final] = caballo;
+                                }
+                                break;
+                            }
+                            case 'k': {
+                                Rey* rey = dynamic_cast<Rey*>(tablero[x_inicial][y_inicial]);
+                                movimiento_valido_jug2 = rey->validar_movimiento('k',x_inicial,y_inicial,x_final,y_final,tablero);
+                                if(movimiento_valido_jug2){
+                                    cout << "hola movimiento jugador 2 completado\n";
+                                    tablero[x_inicial][y_inicial] = NULL;
+                                    tablero[x_final][y_final] = rey;
+                                }
+                                break;
+                            }
+                            case 'r': {
+                                Torre* torre = dynamic_cast<Torre*>(tablero[x_inicial][y_inicial]);
+                                movimiento_valido_jug2 = torre->validar_movimiento('r',x_inicial,y_inicial,x_final,y_final,tablero);
+                                if(movimiento_valido_jug2){
+                                    cout << "hola movimiento jugador 2 completado\n";
+                                    tablero[x_inicial][y_inicial] = NULL;
+                                    tablero[x_final][y_final] = torre;
+                                }
+                                break;
+                            }
+                            default:
+                                //cout << "Movimiento Invalido -- Eligio una pieza que no le corresponde.\n\n";
+                                movimiento_valido_jug2 = false;
+                                break;
                             }
                         }
                     }
-                    movimiento_jugador2 = ""; 
-                    cout << endl;
                     turno++;
+                    cout << endl;
                 }
             }
+            //Liberar Matriz
             // Libera la matriz
 	        for(int i = 0; i < 8; i++){
 		        delete[] tablero[i];
@@ -245,159 +211,51 @@ int main(){
 	        delete[] tablero;
             break;
         }
-            
         case 2:{
-            cout << "Fin del Programa";
+            //Salir de Programa
+            cout << "Fin de Programa\n\n";
             seguir = 'n';
             break;
-        }
+        }    
         default:
-            cout << "Opcion Invalida";
+        cout << "Ingreso una opcion invalida.\n\n";
+            break;
         }
     }
     return 0;
 }
 
-int conseguir_posicionY(string posicion_pieza, bool color){
-    int temporal_y = 0;
-    char caracter_y = posicion_pieza[0];
-    if(color == false){
-        //Coordenadas de Blancos
-        switch (caracter_y){
-        case 'a':
-            temporal_y = 0;
-            break;
-        case 'b':
-            temporal_y = 1;
-            break;
-        case 'c':
-            temporal_y = 2;
-            break;
-        case 'd':
-            temporal_y = 3;
-            break;
-        case 'e':
-            temporal_y = 4;
-            break;
-        case 'f':
-            temporal_y = 5;
-            break;
-        case 'g':
-            temporal_y = 6;
-            break;
-        case 'h':
-            temporal_y = 7;
-            break;    
-        default:
-        temporal_y = 9;
-            break;
-        }
-    } else {
-        //Coordenadas de Negros
-        switch (caracter_y){
-        case 'h':
-            temporal_y = 0;
-            break;
-        case 'g':
-            temporal_y = 1;
-            break;
-        case 'f':
-            temporal_y = 2;
-            break;
-        case 'e':
-            temporal_y = 3;
-            break;
-        case 'd':
-            temporal_y = 4;
-            break;
-        case 'c':
-            temporal_y = 5;
-            break;
-        case 'b':
-            temporal_y = 6;
-            break;
-        case 'a':
-            temporal_y = 7;
-            break;    
-        default:
-            temporal_y = 9;
-            break;
-        }
-    }
-
-    return temporal_y;
-}
-int conseguir_posicionX(string posicion_pieza,bool color){
-    int temporal_x = 0;
-    char caracter_x = posicion_pieza[1];
-    if(color == false) {
-        //Blancos
-        switch (caracter_x){
-        case '8':
-            temporal_x = 0;
-            break;
-        case '7':
-            temporal_x = 1;
-            break;
-        case '6':
-            temporal_x = 2;
-            break;
-        case '5':
-            temporal_x = 3;
-            break;
-        case '4':
-            temporal_x = 4;
-            break;
-        case '3':
-            temporal_x = 5;
-            break;
-        case '2':
-            temporal_x = 6;
-            break;
-        case '1':
-            temporal_x = 7;
-            break;
-        default:
-            temporal_x = 9;
-            break;
-        }
-    } else {
-        //Negros
-        switch (caracter_x){
-        case '1':
-            temporal_x = 7;
-            break;
-        case '2':
-            temporal_x = 6;
-            break;
-        case '3':
-            temporal_x = 5;
-            break;
-        case '4':
-            temporal_x = 4;
-            break;
-        case '5':
-            temporal_x = 3;
-            break;
-        case '6':
-            temporal_x = 2;
-            break;
-        case '7':
-            temporal_x = 1;
-            break;
-        case '8':
-            temporal_x = 0;
-            break;
-        default:
-            temporal_x = 9;
-            break;
-        }
-    }
-    return temporal_x;
+void inicializar_Piezas(Pieza*** tablero){
+    //Inicializar piezas negras
+    //Torres negras
+    tablero[1][4] = new Torre(0,4,'r',"negro");
+    tablero[0][7] = new Torre(0,7,'r',"negro");
+    //Rey negro
+    //tablero[0][4] = new Rey(0,4,'k',"negro"); 
+    //Caballos negros
+    //tablero[0][4] = new Caballo(0,1,'n',"negro");
+    //tablero[0][6] = new Caballo(0,1,'n',"negro");
+    //Peones negros
+    /*for (int i = 0; i < 8; i++){
+        tablero[1][i] = new Peon(1, i, 'p',"negro");
+    }*/
+    //Inicializar piezas blancas
+    //Torres blancas
+    tablero[4][4] = new Torre(4,4,'R',"blanco");
+    tablero[7][7] = new Torre(7,7,'R',"blanco");
+    //Rey blanco
+    //tablero[7][4] = new Rey(0,4,'K',"blanco"); 
+    //Caballos blancos
+    //tablero[7][1] = new Caballo(7,2,'N',"blanco");
+    //tablero[7][6] = new Caballo(7,6,'N',"blanco");
+    //Peones blancos
+    /*for (int i = 0; i < 8; i++){
+        tablero[6][i] = new Peon(6,i,'P',"blanco");
+    }*/
 }
 
-void imprimir_Tablero_Jugador1(Pieza*** tablero, string nombre_jugador1, string nombre_jugador_2){
-    cout << "   "<< nombre_jugador_2 << endl;
+void imprimir_tablero_Jugador1(Pieza*** tablero, string nombre_jugador1, string nombre_jugador2){
+    cout << "   "<< nombre_jugador2 << endl;
     int contador_columna = 8;
     for (int i = 0; i < 8; i++){
         for (int j = -1; j < 8; j++){
@@ -407,14 +265,18 @@ void imprimir_Tablero_Jugador1(Pieza*** tablero, string nombre_jugador1, string 
             } else {
                 if(tablero[i][j] == NULL) {
                     if(j== 7){
+                        //cout << "|" << i << j << "|";
                         cout << "|   |";
                     } else {
+                        //cout << "|" << i << j << "| ";
                         cout << "|   | ";
                     }
                 } else {
                     if(j == 7){
+                        //cout << "| " << i << j << " |";
                         cout << "| " << tablero[i][j]->getCaracter() << " |";
                     } else {
+                        //cout << "| " << i << j << " |";
                         cout << "| " << tablero[i][j]->getCaracter() << " | ";
                     }
                 }
@@ -426,26 +288,30 @@ void imprimir_Tablero_Jugador1(Pieza*** tablero, string nombre_jugador1, string 
     cout << "   " <<nombre_jugador1 << endl;
 }
 
-void imprimir_Tablero_Jugador2(Pieza ***tablero, string nombre_jugador1, string nombre_jugador_2){
+void imprimir_tablero_Jugador2(Pieza ***tablero, string nombre_jugador1, string nombre_jugador_2){
     cout << "   "<<nombre_jugador1 << endl;
     int contador_columna = 1;
 
     for (int i = 7; i >= 0; i--){
-        for (int j = -1; j < 8; j++){
-            if(j == -1){
+        for (int j = 8; j >=0; j--){
+            if(j == 8){
                 cout << "[" << contador_columna << "]";
                 contador_columna++;
             } else {
                 if(tablero[i][j] == NULL) {
                     if(j== 7){
+                        //cout << "|" << i << j << "|";
                         cout << "|   |";
                     } else {
+                        //cout << "|" << i << j << "| ";
                         cout << "|   | ";
                     }
                 } else {
                     if(j == 7){
+                        //cout << "| " << i << j << " |";
                         cout << "| " << tablero[i][j]->getCaracter() << " |";
                     } else {
+                        //cout << "| " << i << j << " |";
                         cout << "| " << tablero[i][j]->getCaracter() << " | ";
                     }
                 }
@@ -457,45 +323,134 @@ void imprimir_Tablero_Jugador2(Pieza ***tablero, string nombre_jugador1, string 
     cout << "   " <<nombre_jugador_2 << endl;
 }
 
-Pieza*** inicializar_Piezas(Pieza*** tablero){
-    //Inicializar Piezas negras
-    tablero[0][0] = new Torre(0, 0, 'r',"negro");
-    tablero[0][7] = new Torre(0, 7, 'r', "negro");
-    //Inicializar Caballos Negros
-    tablero[0][1] = new Caballo(0, 1, 'n',"negro", tablero);
-    tablero[0][6] = new Caballo(0, 6, 'n',"negro", tablero);
-    //Inicializar Alfin Negro
-    tablero[0][2] = new Alfil(0, 2, 'b',"negro");
-    tablero[0][5] = new Alfil(0, 5, 'b',"negro");
-    //Inicializar Rey Negro
-    tablero[0][4] = new Rey(0, 4, 'k',"negro");
-    //Inicializar Reina Negro
-    tablero[0][3] = new Reina(0, 3, 'q',"negro");
-
-    //Peones Negros
-    for (int i = 0; i < 8; i++){
-        tablero[1][i] = new Peon(1, i, 'p',"negro");
+int conseguir_posicionX(char pos_x,bool perspectiva){
+    if(perspectiva){
+        //Busca en perspectiva del Jugador 1
+        switch (pos_x){
+        case '8':
+            return 0;
+            break;
+        case '7':
+            return 1;
+            break;
+        case '6':
+            return 2;
+            break;
+        case '5':
+            return 3;
+            break;
+        case '4':
+            return 4;
+            break;
+        case '3':
+            return 5;
+            break;
+        case '2':
+            return 6;
+            break;
+        case '1':
+            return 7;
+            break;       
+        default:
+        return 9;
+            break;
+        }
+    } else {
+        //Busca en perspectiva del Jugador 2
+        switch (pos_x){
+        case '1':
+            return 7;
+            break;
+        case '2':
+            return 6;
+            break;
+        case '3':
+            return 5;
+            break;
+        case '4':
+            return 4;
+            break;
+        case '5':
+            return 3;
+            break;
+        case '6':
+            return 2;
+            break;
+        case '7':
+            return 1;
+            break;
+        case '8':
+            return 0;
+            break;       
+        default:
+        return 9;
+            break;
+        }
     }
+}
 
-    //Inicializar Piezas Blancas
-    //Torres Blancas
-    tablero[7][0] = new Torre(7, 0, 'R',"blanco");
-    tablero[7][7] = new Torre(7, 7, 'R',"blanco");
-    //Inicializar Caballos Blancas
-    tablero[7][1] = new Caballo(7, 1, 'N',"blanco",tablero);
-    tablero[7][6] = new Caballo(7, 6, 'N',"blanco",tablero);
-    //Inicializar Alfin Blancas
-    tablero[7][2] = new Alfil(7, 2, 'B',"blanco");
-    tablero[7][5] = new Alfil(7, 5, 'B',"blanco");
-
-    //Inicializar Rey Blancas
-    tablero[7][4] = new Rey(7, 4, 'K',"blanco");
-    //Inicializar Reina Blanca
-    tablero[7][3] = new Reina(7, 3, 'Q',"blanco");
-
-    //Peones Blancas
-    for (int i = 0; i < 8; i++){
-        tablero[6][i] = new Peon(6, i, 'P',"blanco");
+int conseguir_posicionY(char pos_y,bool perspectiva) {
+    if(perspectiva){
+        //Perspectiva Jugador 1
+        switch (pos_y){
+        case 'a':
+            return 0;
+            break;
+        case 'b':
+            return 1;
+            break;
+        case 'c':
+            return 2;
+            break;
+        case 'd':
+            return 3;
+            break;
+        case 'e':
+            return 4;
+            break;
+        case 'f':
+            return 5;
+            break;
+        case 'g':
+            return 6;
+            break;
+        case 'h':
+            return 7;
+            break;
+        default:
+            return 9;
+            break;
+        }
+    } else {
+        //Perspectiva Jugador 2
+        switch (pos_y){
+        case 'h':
+            return 7;
+            break;
+        case 'g':
+            return 6;
+            break;
+        case 'f':
+            return 5;
+            break;
+        case 'e':
+            return 4;
+            break;
+        case 'd':
+            return 3;
+            break;
+        case 'c':
+            return 2;
+            break;
+        case 'b':
+            return 1;
+            break;
+        case 'a':
+            return 0;
+            break;
+        default:
+            return 9;
+            break;
+        }
     }
-    return tablero;
 }
